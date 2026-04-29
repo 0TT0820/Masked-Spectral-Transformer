@@ -1,7 +1,8 @@
-﻿excitation_nm,Lab-acquired DUV spectra,Martian meteorite spectra,RRUFF database,SHERLOC in-situ spectra
-248.6,0,0,0,31
-325.0,119,21,0,0
-514.0,0,0,91,0
-532.0,0,0,309,0
-780.0,0,0,191,0
-785.0,0,0,183,0
+﻿excitation_nm,source_type,count
+248.6,SHERLOC in-situ spectra,31
+325.0,Lab-acquired DUV spectra,119
+325.0,Martian meteorite spectra,4
+514.0,RRUFF database,94
+532.0,RRUFF database,315
+780.0,RRUFF database,195
+785.0,RRUFF database,187

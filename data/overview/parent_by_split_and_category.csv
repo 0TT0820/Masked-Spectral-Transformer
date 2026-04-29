@@ -1,17 +1,49 @@
-﻿major_category,external_sherloc,test,train,val
-Borate,0,1,13,1
-Carbonate,0,19,79,26
-Clay,0,12,46,9
-Glass,0,1,2,0
-Halides,0,4,8,5
-K-Feldspar,0,5,33,9
-Mica,0,14,32,6
-Olivine,0,5,37,11
-Other Silicates,0,17,86,13
-Oxides/Hydroxides,0,8,30,5
-Phosphate,1,7,31,9
-Plagioclase,0,10,40,8
-Pyroxene,0,15,113,25
-Serpentine,0,5,7,2
-Silica Phase,0,8,36,4
-Sulfate,30,7,46,4
+﻿split_main,major_category,count
+external_sherloc,Phosphate,1
+external_sherloc,Sulfate,30
+test,Carbonate,19
+test,Clay,11
+test,Glass,2
+test,Halides,4
+test,K-Feldspar,4
+test,Mica,5
+test,Olivine,5
+test,Other Silicates,17
+test,Oxides/Hydroxides,8
+test,Phosphate,14
+test,Plagioclase,7
+test,Pyroxene,24
+test,Serpentine,1
+test,Silica Phase,2
+test,Sulfate,14
+train,Borate,14
+train,Carbonate,82
+train,Clay,45
+train,Glass,1
+train,Halides,10
+train,K-Feldspar,38
+train,Mica,41
+train,Olivine,33
+train,Other Silicates,82
+train,Oxides/Hydroxides,28
+train,Phosphate,28
+train,Plagioclase,43
+train,Pyroxene,109
+train,Serpentine,10
+train,Silica Phase,38
+train,Sulfate,38
+val,Borate,1
+val,Carbonate,23
+val,Clay,11
+val,Halides,3
+val,K-Feldspar,5
+val,Mica,6
+val,Olivine,15
+val,Other Silicates,17
+val,Oxides/Hydroxides,7
+val,Phosphate,5
+val,Plagioclase,8
+val,Pyroxene,20
+val,Serpentine,3
+val,Silica Phase,8
+val,Sulfate,5

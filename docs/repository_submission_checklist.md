@@ -12,6 +12,7 @@ This file maps the repository contents to common software-publication review req
 - User guide: `docs/user_guide.md`.
 - No archive-only distribution: raw spectra are stored as individual CSV files under `data/spectra/parent/`.
 - Data provenance: `data/metadata/metadata_parent_945.csv`, `data/metadata/repository_spectra_index.csv`, and `data/overview/parent_provenance_inventory.csv`.
+- Reviewer data-flow inventory: `data/overview/review_data_inventory/`, especially `dataset_stage_summary.csv`, `dataset_flow_by_review_class.csv`, and `spectrum_level_provenance_review.csv`.
 - Augmentation lineage: `src/augment_raman_dataset.py` writes parent identifiers, random seeds, and parameter JSON for every generated spectrum.
 - Manuscript figures: `assets/figures/` with an overview in `docs/figure_gallery.md`.
 

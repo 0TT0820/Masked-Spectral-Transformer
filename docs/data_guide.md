@@ -49,10 +49,10 @@ data/overview/parent_by_source_type.csv
 
 Current source counts:
 
-- RRUFF database: 774 spectra
+- RRUFF database: 791 spectra
 - Laboratory-acquired DUV spectra: 119 spectra
 - SHERLOC in-situ spectra: 31 spectra
-- Martian meteorite spectra: 21 spectra
+- Martian meteorite spectra: 4 spectra
 
 ## Split Policy
 
@@ -63,6 +63,19 @@ data/metadata/metadata_parent_group_split.csv
 ```
 
 The split is group-wise. Spectra sharing the same `parent_group`, such as different excitation wavelengths from the same RRUFF record, are not split across train, validation, and test sets.
+
+For reviewer-facing reporting, use `data/overview/review_data_inventory/`. The key files are:
+
+```text
+data/overview/review_data_inventory/dataset_stage_summary.csv
+data/overview/review_data_inventory/dataset_flow_by_review_class.csv
+data/overview/review_data_inventory/source_split_class_matrix.csv
+data/overview/review_data_inventory/sherloc_product_group_summary.csv
+data/overview/review_data_inventory/meteorite_spot_inventory.csv
+data/overview/review_data_inventory/spectrum_level_provenance_review.csv
+```
+
+This inventory separates raw parent spectra from review-ready Earth-domain train/validation/test spectra, reproducible augmentation targets, SHERLOC external/candidate transfer groups, and excluded halide spectra.
 
 SHERLOC in-situ spectra are marked as `external_sherloc` and are not mixed into the Earth-domain training split.
 

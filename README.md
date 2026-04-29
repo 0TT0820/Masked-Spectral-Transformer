@@ -19,6 +19,7 @@ publication_repo/
   data/
     metadata/                 Spectrum-level metadata and split files
     overview/                  Data-source and augmentation overview tables
+      review_data_inventory/   Review-facing provenance and data-flow tables
     spectra/parent/            945 non-compressed parent Raman spectra
   assets/
     figures/                   Figures extracted from the manuscript
@@ -95,10 +96,10 @@ In the current group-wise split, MST gives the strongest macro-F1 among the test
 
 The parent dataset contains 945 spectra:
 
-- RRUFF database: 774 spectra
+- RRUFF database: 791 spectra
 - Laboratory-acquired DUV spectra: 119 spectra
 - SHERLOC in-situ spectra: 31 spectra
-- Martian meteorite spectra: 21 spectra
+- Martian meteorite spectra: 4 spectra
 
 See `docs/data_guide.md` and `data/overview/parent_by_source_type.csv` for details.
 
@@ -124,9 +125,14 @@ data/overview/parent_by_source_type.csv
 data/overview/parent_by_source_and_category.csv
 data/overview/parent_by_excitation_and_source.csv
 data/overview/parent_provenance_inventory.csv
+data/overview/review_data_inventory/dataset_stage_summary.csv
+data/overview/review_data_inventory/dataset_flow_by_review_class.csv
+data/overview/review_data_inventory/spectrum_level_provenance_review.csv
 ```
 
 No `.zip`, `.rar`, or `.7z` archive is required to inspect the dataset.
+
+The review-facing inventory separates raw parent spectra, review-ready Earth-domain train/validation/test spectra, reproducible augmentation targets, SHERLOC external/candidate transfer groups, and excluded halide spectra. This is the recommended table set for responding to data-transparency reviewer comments.
 
 ## Figures
 
