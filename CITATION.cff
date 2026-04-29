@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+title: Physics-Informed Raman Spectral Transformer for Planetary Mineral Identification
+message: If you use this repository, please cite the associated manuscript and this software archive.
+type: software
+authors:
+  - family-names: Li
+    given-names: ""
+  - family-names: Deng
+    given-names: ""
+repository-code: https://github.com/0TT0820/MST-Raman_Spectral_Classification
+license: MIT
+date-released: 2026-04-29

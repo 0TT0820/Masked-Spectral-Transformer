@@ -1,0 +1,133 @@
+﻿,major_category,subtype_label,total_spectra,exact_parent,species_level_only,unresolved
+0,Borate,Colemanite,200,7,193,0
+1,Borate,Kernite,200,2,198,0
+2,Borate,Ulexite,200,6,194,0
+3,Carbonate,Aragonite,200,12,188,0
+4,Carbonate,Calcite,200,31,169,0
+5,Carbonate,Chalk,200,2,198,0
+6,Carbonate,Dolomite,200,25,175,0
+7,Carbonate,Magnesite,200,12,188,0
+8,Carbonate,Nacholite,200,1,0,199
+9,Carbonate,Nahcolite,200,3,197,0
+10,Carbonate,Rhodochrosite,200,16,184,0
+11,Carbonate,Siderite,200,14,186,0
+12,Carbonate,Trona,200,8,192,0
+13,Clay,Berthierine,200,2,198,0
+14,Clay,Chamosite,200,2,198,0
+15,Clay,Chlorite,200,2,198,0
+16,Clay,Cookeite,200,2,198,0
+17,Clay,Dickite,200,4,196,0
+18,Clay,Dozyite,200,2,198,0
+19,Clay,Hectorite,200,2,198,0
+20,Clay,Hisingerite,200,4,196,0
+21,Clay,Illite,200,2,198,0
+22,Clay,Kaolinite,200,2,198,0
+23,Clay,Montmorillonite,200,6,194,0
+24,Clay,Nacrite,200,2,198,0
+25,Clay,Nontronite,200,4,196,0
+26,Clay,Pyrophyllite,200,8,192,0
+27,Clay,Sepiolite,200,2,198,0
+28,Clay,Smectite,200,2,198,0
+29,Clay,Swinefordite,200,2,198,0
+30,Clay,Talc,200,17,183,0
+31,Glass,Basaltic Glass,200,3,197,0
+32,Halides,Ammonium Chloride,200,2,198,0
+33,Halides,Ca Chloride,200,2,198,0
+34,Halides,Halite,200,8,192,0
+35,Halides,K Bromide,200,3,197,0
+36,Halides,Mg Chloride,200,2,198,0
+37,K-Feldspar,Celsian,200,6,194,0
+38,K-Feldspar,Microcline,200,18,182,0
+39,K-Feldspar,Microline,200,1,0,199
+40,K-Feldspar,Orthoclase,200,19,181,0
+41,K-Feldspar,Sanidine,200,3,197,0
+42,Mica,Annite,200,5,195,0
+43,Mica,Biotite,200,2,198,0
+44,Mica,Kinoshitalite,200,2,198,0
+45,Mica,Margarite,200,2,198,0
+46,Mica,Muscovite,200,28,172,0
+47,Mica,Paragonite,200,2,198,0
+48,Mica,Phlogopite,200,11,189,0
+49,Olivine,Fayalite,200,15,185,0
+50,Olivine,Forsterite,200,36,164,0
+51,Olivine,Olivine,200,2,198,0
+52,Other Silicates,Amesite,200,4,196,0
+53,Other Silicates,Bannisterite,200,4,196,0
+54,Other Silicates,Buddingtonite,200,2,198,0
+55,Other Silicates,Caryopilite,200,2,198,0
+56,Other Silicates,Clinochlore,200,12,188,0
+57,Other Silicates,Cronstedtite,200,2,198,0
+58,Other Silicates,Epidote,200,32,168,0
+59,Other Silicates,Filatovite,200,2,198,0
+60,Other Silicates,Friedelite,200,4,196,0
+61,Other Silicates,Kellyite,200,2,198,0
+62,Other Silicates,Manandonite,200,2,198,0
+63,Other Silicates,Mcgillite,200,2,198,0
+64,Other Silicates,Nelenite,200,4,196,0
+65,Other Silicates,Nepouite,200,2,198,0
+66,Other Silicates,PyrosmaliteFe,200,7,193,0
+67,Other Silicates,PyrosmaliteMn,200,2,198,0
+68,Other Silicates,Reedmergnerite,200,2,198,0
+69,Other Silicates,Rubicline,200,2,198,0
+70,Other Silicates,Stilpnomelane,200,6,194,0
+71,Other Silicates,Topaz,200,21,179,0
+72,Oxides/Hydroxides,Brucite,200,7,193,0
+73,Oxides/Hydroxides,Chromite,200,6,194,0
+74,Oxides/Hydroxides,Hematite,200,15,185,0
+75,Oxides/Hydroxides,Ilmenite,200,7,193,0
+76,Oxides/Hydroxides,Manganite,200,8,192,0
+77,Phosphate,Ardealite,200,3,197,0
+78,Phosphate,Brushite,200,2,198,0
+79,Phosphate,Churchite-(Y),200,3,0,197
+80,Phosphate,Fluorapatite,200,35,165,0
+81,Phosphate,Pharmacolite,200,4,196,0
+82,Phosphate,Phosphate,200,1,199,0
+83,Plagioclase,Albite,200,25,175,0
+84,Plagioclase,Andesine,200,1,199,0
+85,Plagioclase,Anorthite,200,21,179,0
+86,Plagioclase,Bytownite,200,4,196,0
+87,Plagioclase,Labradorite,200,6,194,0
+88,Plagioclase,Oligoclase,200,1,199,0
+89,Pyroxene,Aegirine,200,16,184,0
+90,Pyroxene,Augite,200,13,187,0
+91,Pyroxene,Clinoenstatite,200,3,197,0
+92,Pyroxene,Clinoferrosilite,200,2,198,0
+93,Pyroxene,Diopside,200,35,165,0
+94,Pyroxene,Donpeacorite,200,2,198,0
+95,Pyroxene,Enstatite,200,33,167,0
+96,Pyroxene,Esseneite,200,2,198,0
+97,Pyroxene,Ferrosilite,200,5,195,0
+98,Pyroxene,Hedenbergite,200,11,189,0
+99,Pyroxene,Jadeite,200,3,197,0
+100,Pyroxene,Johannsenite,200,2,198,0
+101,Pyroxene,Kanoite,200,2,198,0
+102,Pyroxene,Kosmochlor,200,1,199,0
+103,Pyroxene,Kushiroite,200,2,198,0
+104,Pyroxene,Omphacite,200,4,196,0
+105,Pyroxene,Petedunnite,200,2,198,0
+106,Pyroxene,Pigeonite,200,2,198,0
+107,Pyroxene,Spodumene,200,13,187,0
+108,Serpentine,Antigorite,200,3,197,0
+109,Serpentine,Antigotire,200,1,0,199
+110,Serpentine,Chrysotile,200,4,196,0
+111,Serpentine,Lizardite,200,2,198,0
+112,Serpentine,Serpentine,200,2,198,0
+113,Serpentine,Serpentinite,200,2,198,0
+114,Silica Phase,Opal,200,24,176,0
+115,Silica Phase,Quartz,200,24,176,0
+116,Sulfate,Anhydrite,200,18,182,0
+117,Sulfate,Barite,200,1,199,0
+118,Sulfate,Bassanite,200,5,195,0
+119,Sulfate,Epsomite,200,5,195,0
+120,Sulfate,Fe II Sulfate,200,2,198,0
+121,Sulfate,Fe III Sulfate,200,2,198,0
+122,Sulfate,Gypsum,200,29,171,0
+123,Sulfate,Kieserite,200,2,198,0
+124,Sulfate,Melanterite,200,2,198,0
+125,Sulfate,Mg Sulfate,200,2,198,0
+126,Sulfate,Na Sulfate,200,2,198,0
+127,Sulfate,Natroalunite,200,4,196,0
+128,Sulfate,Natroalunite-Jarosite,200,1,0,199
+129,Sulfate,Natroalunite-jarosite,200,1,199,0
+130,Sulfate,Natrojarosite,200,9,191,0
+131,Sulfate,Thenardite,200,2,198,0

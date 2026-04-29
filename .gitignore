@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+results/reproduction_runs/
+results/test_runs/
+data/augmented_spectra/
+data/augmented_spectra/spectra/
+assets/_docx_extract/
+*.pth
+*.pt
+*.ckpt
+*.zip
+*.rar
+*.7z
