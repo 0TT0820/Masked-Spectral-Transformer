@@ -7,10 +7,10 @@ import re
 import pandas as pd
 
 
-ROOT = Path(__file__).resolve().parents[1]
-METADATA_DIR = ROOT / "data" / "metadata"
+ROOT = Path(__file__).resolve().parent
+METADATA_DIR = ROOT / "data" / "metadata_outputs"
 PARENT_FILE = METADATA_DIR / "metadata_parent_945.csv"
-OUT_DIR = ROOT / "data" / "overview" / "review_data_inventory"
+OUT_DIR = METADATA_DIR / "review_data_inventory"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 TARGET_PER_REVIEW_CLASS = 200
@@ -156,6 +156,18 @@ def main() -> None:
         "source_id",
         "source_reference_name",
         "source_reference_url",
+        "rruff_official_id",
+        "rruff_official_name",
+        "rruff_ideal_chemistry",
+        "rruff_measured_chemistry",
+        "rruff_locality",
+        "rruff_source",
+        "rruff_owner",
+        "rruff_description",
+        "rruff_status",
+        "rruff_url",
+        "rruff_header_parse_status",
+        "rruff_metadata_match",
         "excitation_nm",
         "instrument",
         "data_level",

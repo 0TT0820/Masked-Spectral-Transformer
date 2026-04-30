@@ -16,6 +16,15 @@ data/spectra/parent/
 
 Each spectrum file contains two columns: wavenumber and intensity.
 
+RRUFF spectra include additional official header fields parsed from the downloaded RRUFF text spectra:
+
+```text
+data/metadata/rruff_official_header_metadata.csv
+data/metadata/metadata_parent_945_rruff_enriched.csv
+```
+
+These fields include the official RRUFF identifier, mineral name, ideal chemistry, measured chemistry where available, locality, source collection, owner, sample description, identification status, and official RRUFF URL. The extraction script is `src/enrich_metadata_from_rruff_headers.py`.
+
 ## Metadata Fields
 
 Key columns in `metadata_parent_945.csv` include:
@@ -38,6 +47,13 @@ Key columns in `metadata_parent_945.csv` include:
 - `split_main`: group-wise train/validation/test/external split.
 - `qc_status`: quality-control flag.
 - `qc_reason`: reason for review or exclusion.
+- `rruff_official_name`: official RRUFF mineral name for RRUFF-derived spectra.
+- `rruff_ideal_chemistry`: official ideal chemistry from the RRUFF header.
+- `rruff_measured_chemistry`: measured chemistry from the RRUFF header where available.
+- `rruff_locality`: RRUFF specimen locality.
+- `rruff_source`: RRUFF source collection.
+- `rruff_status`: RRUFF identification status.
+- `rruff_url`: official RRUFF record URL.
 
 ## Source Types
 

@@ -1,0 +1,9 @@
+{
+  "metadata": "data/metadata/metadata_parent_945.csv",
+  "enriched_out": "data/metadata/metadata_parent_945_rruff_enriched.csv",
+  "rruff_table": "data/metadata/rruff_official_header_metadata.csv",
+  "rruff_rows": 791,
+  "rruff_headers_ok": 791,
+  "rruff_headers_not_found": 0,
+  "unique_rruff_ids_with_headers": 397
+}

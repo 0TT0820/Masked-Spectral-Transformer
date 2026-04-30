@@ -115,7 +115,9 @@ Each file is linked to a stable `spectrum_id` in:
 
 ```text
 data/metadata/metadata_parent_945.csv
+data/metadata/metadata_parent_945_rruff_enriched.csv
 data/metadata/repository_spectra_index.csv
+data/metadata/rruff_official_header_metadata.csv
 ```
 
 Key provenance summary tables are directly visible in:
@@ -133,6 +135,8 @@ data/overview/review_data_inventory/spectrum_level_provenance_review.csv
 No `.zip`, `.rar`, or `.7z` archive is required to inspect the dataset.
 
 The review-facing inventory separates raw parent spectra, review-ready Earth-domain train/validation/test spectra, reproducible augmentation targets, SHERLOC external/candidate transfer groups, and excluded halide spectra. This is the recommended table set for responding to data-transparency reviewer comments.
+
+RRUFF-derived spectra include official header metadata parsed from the downloaded RRUFF text spectra, including mineral name, chemistry, locality, source collection, owner, identification status, and official RRUFF URL.
 
 ## Figures
 

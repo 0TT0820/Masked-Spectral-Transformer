@@ -11,7 +11,7 @@
     "external_sherloc": 31,
     "excluded_halide_review": 17
   },
-  "stage_summary_file": "data\\overview\\review_data_inventory\\dataset_stage_summary.csv",
-  "class_flow_file": "data\\overview\\review_data_inventory\\dataset_flow_by_review_class.csv",
-  "workbook": "data\\overview\\review_data_inventory\\review_data_inventory_tables.xlsx"
+  "stage_summary_file": "data\\metadata_outputs\\review_data_inventory\\dataset_stage_summary.csv",
+  "class_flow_file": "data\\metadata_outputs\\review_data_inventory\\dataset_flow_by_review_class.csv",
+  "workbook": "data\\metadata_outputs\\review_data_inventory\\review_data_inventory_tables.xlsx"
 }

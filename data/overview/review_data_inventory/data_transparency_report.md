@@ -1,6 +1,6 @@
 # Review Data Transparency Report
 
-Generated from `data\metadata\metadata_parent_945.csv`.
+Generated from `data\metadata_outputs\metadata_parent_945.csv`.
 
 ## Primary Recommendation
 
