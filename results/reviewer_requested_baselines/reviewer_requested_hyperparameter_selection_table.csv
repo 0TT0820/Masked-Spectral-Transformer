@@ -1,6 +1,0 @@
-﻿Model,Tuning search space,Selection criterion,Selected hyperparameters,Validation macro-F1,Test accuracy,Test macro-F1,Test weighted-F1
-Standard Transformer,"learning rate {1e-4, 3e-5}; d_model {96, 128}; layers {3, 4}; patch size 8",highest validation macro-F1,lr=0.0001; d_model=96; layers=3; patch=8,0.784,0.774,0.642,0.767
-MST,"learning rate {1e-4, 3e-5}; d_model {96, 128}; layers {3, 4}; patch size {8, 4}",highest validation macro-F1,lr=3e-05; d_model=128; layers=4; patch=8,0.811,0.744,0.641,0.746
-PCA-SVM,"stride {4, 8}; PCA components {40, 80}; SVM C {1, 10}; gamma {scale, 0.001}",highest validation macro-F1,stride=8; pca=40; C=10.0; gamma=scale,0.801,0.729,0.621,0.724
-Optimized 1D-CNN,"learning rate {1e-3, 3e-4}; dropout {0.25, 0.40}; tuned 4-block 1D-CNN",highest validation macro-F1,lr=0.0003; dropout=0.4,0.687,0.669,0.552,0.66
-PLS-DA,"stride {4, 8}; latent components {4, 8, 12}",highest validation macro-F1,stride=4; components=12,0.492,0.519,0.367,0.491

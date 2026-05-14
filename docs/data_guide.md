@@ -80,24 +80,24 @@ data/metadata/metadata_parent_group_split.csv
 
 The split is group-wise. Spectra sharing the same `parent_group`, such as different excitation wavelengths from the same RRUFF record, are not split across train, validation, and test sets.
 
-For reviewer-facing reporting, use `data/overview/review_data_inventory/`. The key files are:
+For detailed data-flow reporting, use `data/overview/data_inventory/`. The key files are:
 
 ```text
-data/overview/review_data_inventory/dataset_stage_summary.csv
-data/overview/review_data_inventory/dataset_flow_by_review_class.csv
-data/overview/review_data_inventory/source_split_class_matrix.csv
-data/overview/review_data_inventory/sherloc_product_group_summary.csv
-data/overview/review_data_inventory/meteorite_spot_inventory.csv
-data/overview/review_data_inventory/spectrum_level_provenance_review.csv
+data/overview/data_inventory/dataset_stage_summary.csv
+data/overview/data_inventory/dataset_flow_by_class.csv
+data/overview/data_inventory/source_split_class_matrix.csv
+data/overview/data_inventory/sherloc_product_group_summary.csv
+data/overview/data_inventory/meteorite_spot_inventory.csv
+data/overview/data_inventory/spectrum_level_provenance.csv
 ```
 
-This inventory separates raw parent spectra from review-ready Earth-domain train/validation/test spectra, reproducible augmentation targets, SHERLOC external/candidate transfer groups, and excluded halide spectra.
+This inventory separates raw parent spectra from Earth-domain train/validation/test spectra, reproducible augmentation targets, SHERLOC external/candidate transfer groups, and excluded halide spectra.
 
 SHERLOC in-situ spectra are marked as `external_sherloc` and are not mixed into the Earth-domain training split.
 
 ## SHERLOC Region Fine-Tuning Dataset
 
-The revision adds a SHERLOC region dataset derived from labeled point-level
+This release adds a SHERLOC region dataset derived from labeled point-level
 mineral assignments in Dourbes, Garde/Bellegarde, Guillaumes, and Quartier.
 Only points with explicit mineral labels in the region spreadsheets are used;
 unlabeled points are treated as noise/background and are not included as
@@ -154,4 +154,4 @@ Important files:
 - `parent_by_split_and_category.csv`
 - `parent_provenance_inventory.csv`
 - `augmented_by_lineage_status.csv`
-- `reviewer_data_transparency_checklist.csv`
+- `data_transparency_checklist.csv` (legacy filename; provenance checklist)

@@ -92,7 +92,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
     parser.add_argument("--target-per-class", type=int, default=200)
     parser.add_argument("--seed", type=int, default=2024)
-    parser.add_argument("--include-review-required", action="store_true")
+    parser.add_argument("--include-qc-required", dest="include_review_required", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
     return parser.parse_args()
 

@@ -1,0 +1,6 @@
+﻿,reviewer_requirement,current_file,current_status,remaining_action
+0,Each spectrum has source attribution,metadata_parent_945.csv,Available for all 945 parent spectra via source_type/source_id/reference fields,Manually complete supplier/lot/acquisition details for lab DUV and meteorite spectra
+1,Training/validation/test split is reconstructable,metadata_parent_group_split.csv,Available; group-wise split prevents parent_group leakage,Use these split IDs in every final training script and report counts in Methods/SI
+2,Augmented spectra trace to parent spectra,metadata_augmented_lineage.csv,Partial: exact parent for original 945 rows; most augmented rows only species-level due to old filename scheme,"Regenerate final augmented set with parent_spectrum_id, random_seed, and transform parameters logged per augmented spectrum"
+3,Halides/weak spectra physically reviewed,metadata_parent_qc_review.csv,Flagged as review_required,Exclude Halides from supervised Raman-active classes or move to rejection/weak-feature class after manual band verification
+4,SHERLOC in-situ data not mixed ambiguously,metadata_parent_945.csv,SHERLOC spectra marked external_sherloc/external_domain,Describe zero-shot/fine-tuning protocols separately and never call fine-tuned results strict Earth-trained zero-shot

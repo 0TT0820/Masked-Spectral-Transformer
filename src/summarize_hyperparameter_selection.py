@@ -1,4 +1,4 @@
-"""Create a reviewer-ready hyperparameter selection table."""
+"""Create a benchmark hyperparameter selection table."""
 
 from __future__ import annotations
 
@@ -8,8 +8,8 @@ from pathlib import Path
 import pandas as pd
 
 
-RUN_DIR = Path("review_round3_fair_model_selection/review_ready_20260510_145634")
-OUT_DIR = Path("review_round3_requested_baselines_only")
+RUN_DIR = Path("results/model_selection/fair_selection_20260510_145634")
+OUT_DIR = Path("results/model_benchmarks")
 
 
 DISPLAY = {
@@ -39,7 +39,7 @@ def param_text(raw: str) -> str:
 
 def main() -> None:
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    selected = pd.read_csv(OUT_DIR / "reviewer_requested_validation_selected_summary.csv")
+    selected = pd.read_csv(OUT_DIR / "validation_selected_summary.csv")
     rows = []
     for _, r in selected.iterrows():
         model = r["model"]
@@ -56,7 +56,7 @@ def main() -> None:
             }
         )
     out = pd.DataFrame(rows)
-    out.to_csv(OUT_DIR / "reviewer_requested_hyperparameter_selection_table.csv", index=False, encoding="utf-8-sig")
+    out.to_csv(OUT_DIR / "hyperparameter_selection_table.csv", index=False, encoding="utf-8-sig")
 
     md = [
         "# Hyperparameter Selection Summary",
@@ -67,7 +67,7 @@ def main() -> None:
         "",
         "A high validation macro-F1 means that MST was the preferred model family under the pre-specified validation-based selection rule. It does not by itself prove that MST has the highest final test score on every metric. Therefore, the manuscript should report both validation-selected hyperparameters and independent test performance.",
         "",
-        "## Reviewer-requested baseline tuning",
+        "## Benchmark model tuning",
         "",
         "| Model | Search space | Selected hyperparameters | Val Macro-F1 | Test Acc. | Test Macro-F1 | Test Weighted-F1 |",
         "|---|---|---|---:|---:|---:|---:|",
@@ -83,7 +83,7 @@ def main() -> None:
         "",
         "Use wording such as: 'Hyperparameters for all baseline models were selected on the validation split using macro-F1, and the final selected models were evaluated once on the held-out test split.'",
         "",
-        "Avoid wording such as: 'MST is superior because it has the highest validation macro-F1.' The correct claim is narrower: 'MST achieved the highest validation macro-F1 among the reviewer-requested baselines and competitive independent test performance, while retaining the architectural advantages required for parameter-efficient SHERLOC adaptation.'",
+        "Avoid wording such as: 'MST is superior because it has the highest validation macro-F1.' The appropriate claim is narrower: 'MST achieved the highest validation macro-F1 among the benchmark models and competitive independent test performance, while retaining the architectural advantages required for parameter-efficient SHERLOC adaptation.'",
     ]
     (OUT_DIR / "hyperparameter_selection_summary.md").write_text("\n".join(md), encoding="utf-8")
     print(out.to_string(index=False))

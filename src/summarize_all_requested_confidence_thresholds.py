@@ -1,4 +1,4 @@
-"""Summarize confidence-threshold analysis for all reviewer-requested models."""
+"""Summarize confidence-threshold analysis for all benchmark models."""
 
 from __future__ import annotations
 
@@ -7,8 +7,8 @@ from pathlib import Path
 import pandas as pd
 
 
-IN_DIR = Path("review_round4_confidence_threshold_analysis")
-OUT = IN_DIR / "reviewer_requested_models_confidence_summary.md"
+IN_DIR = Path("results/confidence_threshold_analysis")
+OUT = IN_DIR / "model_confidence_summary.md"
 
 
 ORDER = [
@@ -41,9 +41,9 @@ def main() -> None:
     parent_ops.to_csv(IN_DIR / "parent_test_recommended_operating_points_all_requested_models.csv", index=False, encoding="utf-8-sig")
 
     md = [
-        "# Confidence Thresholds for All Reviewer-Requested Models",
+        "# Confidence Thresholds for Benchmark Models",
         "",
-        "This summary covers the parent held-out test set for all reviewer-requested baseline/model families. SHERLOC leave-one-target-out confidence analysis is currently available for MST because the completed SHERLOC fine-tuning protocol was implemented for MST.",
+        "This summary covers the parent held-out test set for all benchmark model families. SHERLOC leave-one-target-out confidence analysis is currently available for MST because the completed SHERLOC fine-tuning protocol was implemented for MST.",
         "",
         "## Recommended Operating Points",
         "",

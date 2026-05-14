@@ -1,4 +1,4 @@
-"""Run target-level SHERLOC transfer experiments for the reviewer revision.
+"""Run target-level SHERLOC transfer experiments.
 
 Protocol:
 1. Use the MST pretrained on the 945-spectrum parent dataset with train-time
@@ -25,13 +25,13 @@ import torch.nn as nn
 from sklearn.metrics import accuracy_score, classification_report, f1_score
 from torch.utils.data import DataLoader, Dataset
 
-from train_review_comparison import GRID, MaskedSpectralTransformer, preprocess_spectrum
+from train_model_comparison import GRID, MaskedSpectralTransformer, preprocess_spectrum
 
 
 ROOT = Path(r"D:/dyt/raman/pigeonite")
-DEFAULT_BASE_RUN = ROOT / "review_round2_base_945_augmented_tuned_lr3e5" / "review_ready_20260509_153216"
+DEFAULT_BASE_RUN = ROOT / "results" / "materialized_augmented_pretraining"
 DEFAULT_METADATA = ROOT / "data" / "metadata_outputs" / "metadata_parent_945_plus_sherloc_regions_table1_training_ready.csv"
-DEFAULT_OUT = ROOT / "review_round2_sherloc_target_transfer"
+DEFAULT_OUT = ROOT / "results" / "sherloc_target_transfer"
 SEED = 2024
 
 

@@ -4,7 +4,7 @@ This repository contains the data inventory, preprocessing workflow, model compa
 
 Repository URL: <https://github.com/0TT0820/Masked-Spectral-Transformer>
 
-The repository is designed for peer review and reuse. It includes non-compressed parent spectra, spectrum-level metadata, fixed group-wise train/validation/test splits, baseline models, the Masked Spectral Transformer (MST), and scripts for Raman-aware data augmentation with parent-level lineage.
+The repository is designed as an open research package for reproduction and reuse. It includes non-compressed parent spectra, spectrum-level metadata, fixed group-wise train/validation/test splits, baseline models, the Masked Spectral Transformer (MST), and scripts for Raman-aware data augmentation with parent-level lineage.
 
 ![Graphical abstract](assets/figures/graphical_abstract.png)
 
@@ -19,31 +19,29 @@ publication_repo/
   data/
     metadata/                 Spectrum-level metadata and split files
     overview/                  Data-source and augmentation overview tables
-      review_data_inventory/   Review-facing provenance and data-flow tables
+      data_inventory/   Detailed provenance and data-flow tables
     spectra/parent/            945 non-compressed parent Raman spectra
   assets/
     figures/                   Figures extracted from the manuscript
   docs/
     augmentation_rationale.md  Physical basis and limits of augmentation
-    dataset_and_experiment_map.md
-                                Map from reviewer comments to data, scripts,
-                                result tables, and manuscript use
+    data_and_results_guide.md  Map of data products, scripts, and outputs
     data_guide.md              Dataset provenance and metadata fields
     reproducibility.md         Commands used to reproduce model tables
     user_guide.md              Inputs, outputs, options, and expected behaviour
     tutorials/                 Step-by-step examples
   results/
     model_comparison/          Published comparison summaries
-    reviewer_requested_baselines/
+    model_benchmarks/
                                 PCA-SVM, PLS-DA, CNN, Transformer, and MST
                                 hyperparameter-selection summaries
     confidence_threshold_analysis/
                                 Precision/recall/FPR/coverage scans for
-                                reviewer-requested operating thresholds
+                                confidence-aware operating thresholds
     sherloc_finetune/           SHERLOC region fine-tuning and LOSO transfer
     mst_focused_tuning/         MST-focused tuning artifacts without weights
   src/
-    train_review_comparison.py Model comparison and evaluation script
+    train_model_comparison.py Model comparison and evaluation script
     augment_raman_dataset.py   Reproducible Raman-aware augmentation script
   LICENSE
   DATA_LICENSE.md
@@ -76,7 +74,7 @@ The code was tested with Python 3.11 on Windows with CUDA-enabled PyTorch. CPU e
 Run the main model comparison:
 
 ```bash
-python src/train_review_comparison.py --models pca_svm pls_da random_forest cnn standard_transformer mst --epochs 180 --batch-size 16 --lr 1e-4 --baseline poly --chemometric-stride 8 --no-augment
+python src/train_model_comparison.py --models pca_svm pls_da random_forest cnn standard_transformer mst --epochs 180 --batch-size 16 --lr 1e-4 --baseline poly --chemometric-stride 8 --no-augment
 ```
 
 Generate Raman-aware augmented spectra with parent-level lineage:
@@ -88,21 +86,23 @@ python src/augment_raman_dataset.py --target-per-class 200 --seed 2024
 Run a fast smoke test:
 
 ```bash
-python src/train_review_comparison.py --models pca_svm pls_da --baseline poly --chemometric-stride 8
+python src/train_model_comparison.py --models pca_svm pls_da --baseline poly --chemometric-stride 8
 ```
 
-## Reviewer-Driven Update
+## Data and Experiment Guide
 
-The latest revision artifacts added for the resubmission are organized by
-reviewer concern:
+For a guided map of data products, scripts, and result files, start with:
 
-- Data/file map for reviewers and coauthors:
-  `docs/dataset_and_experiment_map.md`
+```text
+docs/data_and_results_guide.md
+```
 
-- Baseline adequacy and hyperparameter selection:
-  `results/reviewer_requested_baselines/`
+The main project components are:
+
+- Model benchmarks and hyperparameter selection:
+  `results/model_benchmarks/`
 - Materialized, point-wise augmented spectra:
-  `data/materialized_augmented_review_ready_v1/`
+  `data/materialized_augmented_v1/`
 - SHERLOC region labels and fine-tuning inputs:
   `data/metadata/metadata_parent_945_plus_sherloc_regions_table1_training_ready.csv`
   and `data/overview/sherloc_regions/`
@@ -118,11 +118,11 @@ The corresponding scripts are in `src/`:
 ```text
 build_materialized_augmented_dataset.py
 build_sherloc_region_dataset.py
-run_review_model_selection.py
+run_model_selection.py
 run_sherloc_finetune_protocol.py
 run_confidence_threshold_analysis.py
 run_mst_focused_tuning.py
-summarize_reviewer_requested_baselines.py
+summarize_model_benchmarks.py
 summarize_hyperparameter_selection.py
 summarize_all_requested_confidence_thresholds.py
 ```
@@ -174,14 +174,14 @@ data/overview/parent_by_source_type.csv
 data/overview/parent_by_source_and_category.csv
 data/overview/parent_by_excitation_and_source.csv
 data/overview/parent_provenance_inventory.csv
-data/overview/review_data_inventory/dataset_stage_summary.csv
-data/overview/review_data_inventory/dataset_flow_by_review_class.csv
-data/overview/review_data_inventory/spectrum_level_provenance_review.csv
+data/overview/data_inventory/dataset_stage_summary.csv
+data/overview/data_inventory/dataset_flow_by_class.csv
+data/overview/data_inventory/spectrum_level_provenance.csv
 ```
 
 No `.zip`, `.rar`, or `.7z` archive is required to inspect the dataset.
 
-The review-facing inventory separates raw parent spectra, review-ready Earth-domain train/validation/test spectra, reproducible augmentation targets, SHERLOC external/candidate transfer groups, and excluded halide spectra. This is the recommended table set for responding to data-transparency reviewer comments.
+The detailed inventory separates raw parent spectra, Earth-domain train/validation/test spectra, reproducible augmentation targets, SHERLOC external/candidate transfer groups, and excluded halide spectra.
 
 RRUFF-derived spectra include official header metadata parsed from the downloaded RRUFF text spectra, including mineral name, chemistry, locality, source collection, owner, identification status, and official RRUFF URL.
 
@@ -202,10 +202,10 @@ Code is released under the MIT License. Dataset tables and spectra are released 
 ## Citation
 
 If you use this repository, please cite the associated manuscript and the source databases listed in `data/metadata/metadata_parent_945.csv`.
-## Materialized augmented review dataset
+## Materialized Augmented Dataset
 
-The reviewer-ready augmented dataset is provided in
-`data/materialized_augmented_review_ready_v1/`. It is not a compressed archive.
+The materialized augmented dataset is provided in
+`data/materialized_augmented_v1/`. It is not a compressed archive.
 The dataset contains one CSV file per spectrum in `spectra/`; each file contains
 the complete point-wise values used by the models:
 
@@ -215,15 +215,15 @@ the complete point-wise values used by the models:
 - `valid_mask`
 
 The master table
-`data/materialized_augmented_review_ready_v1/metadata_review_ready_materialized_augmented.csv`
+`data/materialized_augmented_v1/metadata_materialized_augmented.csv`
 links every original and augmented spectrum to its mineral label, source,
 split, parent spectrum, file path, SHA-256 checksum, augmentation seed, and
 JSON-encoded augmentation parameters. Summary tables are in
-`data/materialized_augmented_review_ready_v1/overview_tables/`, including
+`data/materialized_augmented_v1/overview_tables/`, including
 `lineage_manifest.csv` and `split_by_class_and_augmentation.csv`.
 
 The deterministic augmentation protocol is recorded in
-`data/materialized_augmented_review_ready_v1/augmentation_protocol.json`.
+`data/materialized_augmented_v1/augmentation_protocol.json`.
 Raman band centers are not shifted during augmentation. Only the training split
 is augmented; validation and test spectra remain original materialized spectra.
 
@@ -232,17 +232,16 @@ To rebuild the materialized dataset:
 ```bash
 python src/build_materialized_augmented_dataset.py \
   --metadata-file data/metadata_outputs/metadata_parent_945.csv \
-  --out-dir data/materialized_augmented_review_ready_v1 \
+  --out-dir data/materialized_augmented_v1 \
   --min-train-per-class 200 \
   --baseline poly
 ```
 
-To rerun the final reviewer-ready model comparison on the fixed materialized
-dataset:
+To rerun the final model comparison on the fixed materialized dataset:
 
 ```bash
-python src/train_review_comparison.py \
-  --metadata-file data/materialized_augmented_review_ready_v1/metadata_review_ready_materialized_augmented.csv \
+python src/train_model_comparison.py \
+  --metadata-file data/materialized_augmented_v1/metadata_materialized_augmented.csv \
   --models pca_svm pls_da random_forest cnn standard_transformer mst \
   --epochs 80 \
   --batch-size 16 \
@@ -258,7 +257,7 @@ run manifest in `results/experiment_manifest_materialized_augmented.json`.
 
 ## Confidence Threshold Analysis
 
-Reviewer-requested confidence threshold sweeps are archived in:
+Confidence threshold sweeps are archived in:
 
 ```text
 results/confidence_threshold_analysis/
@@ -269,7 +268,7 @@ Key files:
 - `parent_test_key_thresholds_all_requested_models.csv`
 - `parent_test_recommended_operating_points_all_requested_models.csv`
 - `all_confidence_threshold_sweeps.csv`
-- `reviewer_requested_models_confidence_summary.md`
+- `model_confidence_summary.md`
 
 These files report accuracy, macro-F1, precision, recall, false-positive rate,
 and coverage after rejecting predictions below a probability threshold.

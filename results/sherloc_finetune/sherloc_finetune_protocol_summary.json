@@ -1,6 +1,6 @@
 {
   "protocol": "Earth-domain MST pretraining followed by SHERLOC small-sample fine-tuning; leave-one-SHERLOC-spectrum-out validation.",
-  "base_model": "D:\\dyt\\raman\\pigeonite\\reviewer2_materialized_augmented_results_v1\\review_ready_20260503_033305\\torch\\mst.pth",
+  "base_model": "results/materialized_augmented_pretraining/torch/mst.pth",
   "fine_tuning_samples_per_fold": 30,
   "held_out_samples_total": 31,
   "fine_tuning_mode": "last_block_head",
@@ -9,7 +9,7 @@
     4000.0
   ],
   "epochs": 80,
-  "learning_rate": 5e-05,
+  "learning_rate": 5E-05,
   "augmentation_on_sherloc": false,
   "targets": {
     "Dourbes": 27,

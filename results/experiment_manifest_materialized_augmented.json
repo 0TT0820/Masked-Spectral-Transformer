@@ -1,7 +1,7 @@
 {
-  "metadata_file": "data\\materialized_augmented_review_ready_v1\\metadata_review_ready_materialized_augmented.csv",
-  "label_scheme": "review_ready",
-  "include_review_required": false,
+  "metadata_file": "data\\materialized_augmented_v1\\metadata_materialized_augmented.csv",
+  "label_scheme": "curated",
+  "include_qc_required": false,
   "grid": {
     "min_cm-1": 0.0,
     "max_cm-1": 4000.0,

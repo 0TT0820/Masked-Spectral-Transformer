@@ -229,7 +229,7 @@ def normalize_label(raw: object) -> tuple[str, str, str, str, bool]:
             raw_text.title(),
             "",
             "",
-            "unmapped_manual_review_required",
+            "unmapped_manual_qc_required",
             False,
         ),
     )

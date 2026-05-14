@@ -5,55 +5,54 @@
 The main comparison table was produced with:
 
 ```bash
-python src/train_review_comparison.py --models pca_svm pls_da random_forest cnn standard_transformer mst --epochs 180 --batch-size 16 --lr 1e-4 --baseline poly --chemometric-stride 8 --no-augment
+python src/train_model_comparison.py --models pca_svm pls_da random_forest cnn standard_transformer mst --epochs 180 --batch-size 16 --lr 1e-4 --baseline poly --chemometric-stride 8 --no-augment
 ```
 
 For a faster baseline-only check:
 
 ```bash
-python src/train_review_comparison.py --models pca_svm pls_da random_forest --baseline poly --chemometric-stride 8 --no-augment
+python src/train_model_comparison.py --models pca_svm pls_da random_forest --baseline poly --chemometric-stride 8 --no-augment
 ```
 
 For a smoke test:
 
 ```bash
-python src/train_review_comparison.py --models pca_svm pls_da --baseline poly --chemometric-stride 8
+python src/train_model_comparison.py --models pca_svm pls_da --baseline poly --chemometric-stride 8
 ```
 
-## Reviewer-Requested Baselines
+## Model Benchmark Suite
 
-Reviewer 2 requested interpretable chemometric baselines and a fairer CNN
-baseline. The reviewer-facing comparison therefore includes PCA-SVM, PLS-DA,
-1D-CNN, Standard Transformer, and MST, with validation-based hyperparameter
-selection before test reporting.
+The benchmark suite includes PCA-SVM, PLS-DA, 1D-CNN, Standard Transformer,
+and MST. Hyperparameters are selected on the validation split before test
+reporting.
 
 The archived summaries are:
 
 ```text
-results/reviewer_requested_baselines/reviewer_requested_hyperparameter_selection_table.csv
-results/reviewer_requested_baselines/reviewer_requested_validation_selected_summary.csv
-results/reviewer_requested_baselines/reviewer_requested_best_observed_grid_summary.csv
-results/reviewer_requested_baselines/hyperparameter_selection_summary.md
+results/model_benchmarks/hyperparameter_selection_table.csv
+results/model_benchmarks/validation_selected_summary.csv
+results/model_benchmarks/best_observed_grid_summary.csv
+results/model_benchmarks/hyperparameter_selection_summary.md
 ```
 
 To rerun the same family of experiments:
 
 ```bash
-python src/run_review_model_selection.py
-python src/summarize_reviewer_requested_baselines.py
+python src/run_model_selection.py
+python src/summarize_model_benchmarks.py
 python src/summarize_hyperparameter_selection.py
 ```
 
 ## Materialized Augmented Dataset
 
-The reviewer-ready augmentation is deterministic and materialized as one CSV
+The final augmentation dataset is deterministic and materialized as one CSV
 per spectrum. Validation and test spectra remain original spectra; augmentation
 is applied only to the training split.
 
 ```bash
 python src/build_materialized_augmented_dataset.py \
   --metadata-file data/metadata/metadata_parent_945.csv \
-  --out-dir data/materialized_augmented_review_ready_v1 \
+  --out-dir data/materialized_augmented_v1 \
   --min-train-per-class 200 \
   --baseline poly
 ```
@@ -61,7 +60,7 @@ python src/build_materialized_augmented_dataset.py \
 The resulting master metadata table is:
 
 ```text
-data/materialized_augmented_review_ready_v1/metadata_review_ready_materialized_augmented.csv
+data/materialized_augmented_v1/metadata_materialized_augmented.csv
 ```
 
 Each spectrum file contains the model-ready point-wise values:
@@ -96,9 +95,9 @@ python src/run_sherloc_finetune_protocol.py
 
 ## Confidence Thresholds
 
-Reviewer 1 requested precision, recall, and false-positive-rate behavior as a
-function of confidence threshold. Reviewer-requested threshold scans are
-archived in:
+Confidence-threshold scans report precision, recall, false-positive rate,
+accuracy, macro-F1, and coverage as a function of accepted prediction
+confidence. The archived tables are in:
 
 ```text
 results/confidence_threshold_analysis/
@@ -127,7 +126,7 @@ results/model_comparison/best_by_model_summary.csv
 
 The best current MST setting uses:
 
-- label scheme: `review_ready`
+- label scheme: `curated`
 - baseline correction: `poly`
 - train-time augmentation: disabled
 - learning rate: `1e-4`

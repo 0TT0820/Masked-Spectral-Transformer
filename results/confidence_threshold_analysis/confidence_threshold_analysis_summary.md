@@ -1,6 +1,6 @@
 # Confidence Threshold and Rejection Analysis
 
-Predictions with maximum class probability below threshold tau are rejected as uncertain. This directly addresses reviewer concerns about using an arbitrary fixed probability threshold.
+Predictions with maximum class probability below threshold tau are rejected as uncertain. This supports confidence-aware deployment instead of forcing every spectrum into a hard class.
 
 Key outputs:
 

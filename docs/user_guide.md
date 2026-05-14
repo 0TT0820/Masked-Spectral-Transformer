@@ -2,7 +2,7 @@
 
 ## Main Scripts
 
-### `src/train_review_comparison.py`
+### `src/train_model_comparison.py`
 
 Runs model comparisons on the parent Raman dataset.
 
@@ -18,8 +18,8 @@ Supported models:
 Common options:
 
 ```text
---label-scheme review_ready|original_major
---include-review-required
+--label-scheme curated|original_major
+--include-qc-required
 --models MODEL [MODEL ...]
 --epochs INTEGER
 --batch-size INTEGER
@@ -56,7 +56,7 @@ Common options:
 --out-dir PATH
 --target-per-class INTEGER
 --seed INTEGER
---include-review-required
+--include-qc-required
 --dry-run
 ```
 
@@ -70,7 +70,7 @@ data/augmented_spectra/spectra/*.csv
 
 ## Label Schemes
 
-`review_ready` is recommended for manuscript revision. It removes Halides from supervised Raman-active classes and harmonizes Clay, Mica, and Serpentine into `Phyllosilicates`.
+`curated` is recommended for curated supervised classification. It removes Halides from supervised Raman-active classes and harmonizes Clay, Mica, and Serpentine into `Phyllosilicates`.
 
 `original_major` keeps the original major categories and is intended only for comparison with older experiments.
 

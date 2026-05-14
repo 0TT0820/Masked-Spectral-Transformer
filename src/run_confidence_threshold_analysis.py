@@ -1,4 +1,4 @@
-"""Confidence-threshold and rejection analysis for reviewer response.
+"""Confidence-threshold and rejection analysis for Raman model outputs.
 
 This script reports how coverage, accepted accuracy, precision/recall, and
 false-positive measures vary as low-confidence predictions are rejected.
@@ -20,7 +20,7 @@ from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.svm import SVC
 from torch.utils.data import DataLoader
 
-from train_review_comparison import (
+from train_model_comparison import (
     METADATA_FILE,
     PLSDA,
     StandardTransformer,
@@ -31,22 +31,22 @@ from train_review_comparison import (
     load_metadata,
     predict_torch,
 )
-from run_review_model_selection import TunedCNN, make_balanced_augmented_train
+from run_model_selection import TunedCNN, make_balanced_augmented_train
 
 
 ROOT = Path(r"D:/dyt/raman/pigeonite")
-BASE_RUN = ROOT / "review_round3_fair_model_selection" / "review_ready_20260510_145634"
-OUT_DIR = ROOT / "review_round4_confidence_threshold_analysis"
-SHERLOC_RUN = ROOT / "review_round2_sherloc_target_transfer" / "mst945_lr3e5_160ep_lastblock_loto"
+BASE_RUN = ROOT / "results" / "model_selection" / "fair_selection_20260510_145634"
+OUT_DIR = ROOT / "results" / "confidence_threshold_analysis"
+SHERLOC_RUN = ROOT / "results" / "sherloc_target_transfer" / "mst945_lr3e5_160ep_lastblock_loto"
 THRESHOLDS = np.round(np.arange(0.0, 0.951, 0.05), 2)
 
 
 def load_parent_test_arrays():
-    df = load_metadata("review_ready", include_review_required=False, metadata_file=METADATA_FILE)
+    df = load_metadata("curated", include_review_required=False, metadata_file=METADATA_FILE)
     enc = LabelEncoder()
     df["label_id"] = enc.fit_transform(df["model_label"])
     classes = list(enc.classes_)
-    cache_path = build_cache(df, OUT_DIR / "_cache", False, "poly", False, "review_ready")
+    cache_path = build_cache(df, OUT_DIR / "_cache", False, "poly", False, "curated")
     cache = np.load(cache_path)
     x = cache["features"]
     masks = cache["masks"]
@@ -263,7 +263,7 @@ def write_summary(parent: pd.DataFrame, sherloc: pd.DataFrame, ops: pd.DataFrame
     md = [
         "# Confidence Threshold and Rejection Analysis",
         "",
-        "Predictions with maximum class probability below threshold tau are rejected as uncertain. This directly addresses reviewer concerns about using an arbitrary fixed probability threshold.",
+        "Predictions with maximum class probability below threshold tau are rejected as uncertain. This supports confidence-aware deployment instead of forcing every spectrum into a hard class.",
         "",
         "Key outputs:",
         "",

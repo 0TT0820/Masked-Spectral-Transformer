@@ -11,7 +11,7 @@ import pandas as pd
 import torch
 from sklearn.preprocessing import LabelEncoder
 
-from train_review_comparison import (
+from train_model_comparison import (
     METADATA_FILE,
     MaskedSpectralTransformer,
     RamanDataset,
@@ -20,11 +20,11 @@ from train_review_comparison import (
     train_torch_model,
     fix_seed,
 )
-from run_review_model_selection import make_balanced_augmented_train
+from run_model_selection import make_balanced_augmented_train
 
 
 SEED = 2024
-OUT_DIR = Path("review_round4_mst_focused_tuning")
+OUT_DIR = Path("results/mst_focused_tuning")
 
 
 def log(msg: str) -> None:
@@ -34,14 +34,14 @@ def log(msg: str) -> None:
 def main() -> None:
     fix_seed(SEED)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    run_dir = OUT_DIR / f"review_ready_{time.strftime('%Y%m%d_%H%M%S')}"
+    run_dir = OUT_DIR / f"curated_{time.strftime('%Y%m%d_%H%M%S')}"
     run_dir.mkdir(parents=True, exist_ok=True)
 
-    df = load_metadata("review_ready", include_review_required=False, metadata_file=METADATA_FILE)
+    df = load_metadata("curated", include_review_required=False, metadata_file=METADATA_FILE)
     enc = LabelEncoder()
     df["label_id"] = enc.fit_transform(df["model_label"])
     classes = list(enc.classes_)
-    cache_path = build_cache(df, OUT_DIR / "_cache", False, "poly", False, "review_ready")
+    cache_path = build_cache(df, OUT_DIR / "_cache", False, "poly", False, "curated")
     cache = np.load(cache_path)
     x, masks, y = cache["features"], cache["masks"], df["label_id"].to_numpy(dtype=np.int64)
     train_idx = np.where(df["split_main"].eq("train").to_numpy())[0]

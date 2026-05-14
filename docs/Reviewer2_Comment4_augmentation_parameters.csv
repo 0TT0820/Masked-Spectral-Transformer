@@ -1,7 +1,0 @@
-﻿amplitude_range,attenuation_factor_range,center_shift_cm-1,coefficient_std,gamma_range,half_width_points_range,kernel,mixing_alpha_range,operation,polynomial_order,probability,sigma_cm-1_range,sigma_range_after_normalization,windows_per_spectrum
-,,,,"[0.75, 1.35]",,,,gamma_intensity_response,,0.7,,,
-"[-0.08, 0.08]",,0.0,,,,,,band_envelope_intensity_perturbation,,0.2,"[4.0, 10.0]",,
-,,,"[0.015, 0.02, 0.015]",,,,,residual_baseline,2,0.5,,,
-,,,,,,,,gaussian_read_noise,,0.8,,"[0.005, 0.025]",
-,,,,,,"[0.08, 0.18, 0.48, 0.18, 0.08]","[0.25, 0.65]",symmetric_broadening,,0.35,,,
-,"[0.75, 0.95]",,,,"[8, 35]",,,weak_band_attenuation,,0.25,,,"[1, 3]"

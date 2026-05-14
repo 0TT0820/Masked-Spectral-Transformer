@@ -21,7 +21,7 @@ The following transforms are intentionally avoided in the default workflow:
 - arbitrary warping of the wavenumber axis;
 - synthetic spectra whose parent spectrum cannot be identified.
 
-This design responds directly to reviewer concerns that overly aggressive augmentation may create non-physical spectra and teach the model artifacts rather than mineralogical variability.
+This design reduces the risk that overly aggressive augmentation creates non-physical spectra or teaches the model artifacts rather than mineralogical variability.
 
 ## Reproducible Augmentation
 

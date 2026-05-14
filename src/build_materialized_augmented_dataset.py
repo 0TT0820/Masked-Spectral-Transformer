@@ -9,7 +9,7 @@ import time
 import numpy as np
 import pandas as pd
 
-from train_review_comparison import (
+from train_model_comparison import (
     AUGMENTATION_PROTOCOL,
     GRID,
     PHYLL_LABELS,
@@ -21,7 +21,7 @@ from train_review_comparison import (
 
 ROOT = Path(r"d:/dyt/raman/pigeonite")
 DEFAULT_METADATA = ROOT / "data" / "metadata_outputs" / "metadata_parent_945.csv"
-DEFAULT_OUT = ROOT / "data" / "materialized_augmented_review_ready"
+DEFAULT_OUT = ROOT / "data" / "materialized_augmented_v1"
 SEED = 2024
 
 
@@ -175,7 +175,7 @@ def build_dataset(args: argparse.Namespace) -> None:
     spectra_dir.mkdir(parents=True, exist_ok=True)
     tables_dir.mkdir(parents=True, exist_ok=True)
 
-    df = load_metadata("review_ready", False, args.metadata_file)
+    df = load_metadata("curated", False, args.metadata_file)
     df["model_label"] = df.apply(model_label, axis=1)
     df = df[df["split_main"].isin(["train", "val", "test"])].copy()
 
@@ -256,9 +256,9 @@ def build_dataset(args: argparse.Namespace) -> None:
             aug_count += 1
     materialized = pd.DataFrame(rows)
 
-    metadata_out = out_dir / "metadata_review_ready_materialized_augmented.csv"
+    metadata_out = out_dir / "metadata_materialized_augmented.csv"
     materialized.to_csv(metadata_out, index=False, encoding="utf-8-sig")
-    materialized.to_csv(ROOT / "data" / "metadata_outputs" / "metadata_review_ready_materialized_augmented.csv", index=False, encoding="utf-8-sig")
+    materialized.to_csv(ROOT / "data" / "metadata_outputs" / "metadata_materialized_augmented.csv", index=False, encoding="utf-8-sig")
 
     protocol = dict(AUGMENTATION_PROTOCOL)
     protocol["materialized_dataset"] = {
@@ -300,7 +300,7 @@ def build_dataset(args: argparse.Namespace) -> None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Materialize deterministic Raman augmentation for reviewer-ready reproduction.")
+    parser = argparse.ArgumentParser(description="Materialize deterministic Raman augmentation for reproducible model training.")
     parser.add_argument("--metadata-file", type=Path, default=DEFAULT_METADATA)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT)
     parser.add_argument("--min-train-per-class", type=int, default=200)

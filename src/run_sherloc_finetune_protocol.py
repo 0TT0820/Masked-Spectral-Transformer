@@ -12,19 +12,19 @@ import torch.nn as nn
 from sklearn.metrics import accuracy_score, classification_report, f1_score
 from torch.utils.data import DataLoader, Dataset
 
-from train_review_comparison import (
+from train_model_comparison import (
     GRID,
     MaskedSpectralTransformer,
     preprocess_spectrum,
 )
 
 
-ROOT = Path(r"D:/dyt/raman/pigeonite")
-METADATA_FILE = ROOT / "data" / "metadata_outputs" / "metadata_parent_945.csv"
-BASE_RUN = ROOT / "reviewer2_materialized_augmented_results_v1" / "review_ready_20260503_033305"
+ROOT = Path(__file__).resolve().parents[1]
+METADATA_FILE = ROOT / "data" / "metadata" / "metadata_parent_945.csv"
+BASE_RUN = ROOT / "results" / "materialized_augmented_pretraining"
 BASE_MODEL = BASE_RUN / "torch" / "mst.pth"
 BASE_MANIFEST = BASE_RUN / "experiment_manifest.json"
-OUT_DIR = ROOT / "reviewer2_sherloc_finetune_results"
+OUT_DIR = ROOT / "sherloc_finetune_results"
 SEED = 2024
 
 
@@ -172,7 +172,7 @@ def finetune_one_fold(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Explicit SHERLOC fine-tuning protocol for Reviewer 2 detail comment 1.")
+    parser = argparse.ArgumentParser(description="Explicit SHERLOC fine-tuning protocol.")
     parser.add_argument("--epochs", type=int, default=60)
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--mode", choices=["head_norm", "head_only", "last_block_head", "all"], default="last_block_head")
