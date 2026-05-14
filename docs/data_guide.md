@@ -95,6 +95,40 @@ This inventory separates raw parent spectra from review-ready Earth-domain train
 
 SHERLOC in-situ spectra are marked as `external_sherloc` and are not mixed into the Earth-domain training split.
 
+## SHERLOC Region Fine-Tuning Dataset
+
+The revision adds a SHERLOC region dataset derived from labeled point-level
+mineral assignments in Dourbes, Garde/Bellegarde, Guillaumes, and Quartier.
+Only points with explicit mineral labels in the region spreadsheets are used;
+unlabeled points are treated as noise/background and are not included as
+training labels.
+
+The training-ready combined table is:
+
+```text
+data/metadata/metadata_parent_945_plus_sherloc_regions_table1_training_ready.csv
+```
+
+Supporting files are:
+
+```text
+data/metadata/metadata_sherloc_region_points_only.csv
+data/metadata/sherloc_region_detail_to_ss_mapping.csv
+data/metadata/sherloc_region_point_extraction_manifest.csv
+data/metadata/sherloc_region_table1_training_summary.csv
+data/overview/sherloc_regions/
+```
+
+The mapping file records the relation between each region/detail sheet and the
+corresponding `ss__...csv` SHERLOC spectral product. The extraction manifest
+records the point column, mineral label, mapped manuscript Table 1 superclass,
+and source file for each usable point-level spectrum. If one point has two
+accepted mineral labels, it is represented as two labeled records, preserving
+the same spectrum path but separate label rows.
+
+These SHERLOC spectra are intended for in-situ adaptation and independent
+region/target transfer experiments, not for generating synthetic augmentation.
+
 ## Quality-Control Notes
 
 The QC review table is:

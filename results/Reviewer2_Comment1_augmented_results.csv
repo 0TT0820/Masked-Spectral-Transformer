@@ -1,0 +1,7 @@
+﻿Model,Accuracy (%),Macro-F1 (%),Weighted-F1 (%)
+Random Forest,76.69,64.76,75.08
+PCA-SVM,69.92,62.08,69.03
+Masked Spectral Transformer (MST),75.94,62.07,75.48
+PLS-DA,55.64,39.58,46.82
+Optimized 1D-CNN,40.60,34.35,38.18
+Standard Transformer,35.34,23.71,35.47

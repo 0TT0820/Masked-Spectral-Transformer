@@ -1,0 +1,29 @@
+{
+  "protocol": "Earth-domain MST pretraining followed by SHERLOC small-sample fine-tuning; leave-one-SHERLOC-spectrum-out validation.",
+  "base_model": "D:\\dyt\\raman\\pigeonite\\reviewer2_materialized_augmented_results_v1\\review_ready_20260503_033305\\torch\\mst.pth",
+  "fine_tuning_samples_per_fold": 30,
+  "held_out_samples_total": 31,
+  "fine_tuning_mode": "last_block_head",
+  "sherloc_valid_range_cm-1": [
+    800.0,
+    4000.0
+  ],
+  "epochs": 80,
+  "learning_rate": 5e-05,
+  "augmentation_on_sherloc": false,
+  "targets": {
+    "Dourbes": 27,
+    "Bellegarde": 4
+  },
+  "labels": {
+    "Sulfate": 30,
+    "Phosphate": 1
+  },
+  "zero_shot_accuracy": 0.5483870967741935,
+  "zero_shot_macro_f1_all_classes": 0.19461697722567287,
+  "zero_shot_macro_f1_present_labels": 0.681159420289855,
+  "finetuned_loso_accuracy": 0.9354838709677419,
+  "finetuned_loso_macro_f1_all_classes": 0.48333333333333334,
+  "finetuned_loso_macro_f1_present_labels": 0.48333333333333334,
+  "mean_final_training_loss": 0.002437278752275292
+}

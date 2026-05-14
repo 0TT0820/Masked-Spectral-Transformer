@@ -16,6 +16,11 @@ try:
 except ImportError:
     savgol_filter = None
 
+try:
+    from scipy.signal import find_peaks
+except ImportError:
+    find_peaks = None
+
 from sklearn.cross_decomposition import PLSRegression
 from sklearn.decomposition import PCA
 from sklearn.ensemble import RandomForestClassifier
@@ -36,14 +41,60 @@ import torch.nn.functional as F
 from torch.utils.data import DataLoader, Dataset
 
 
-ROOT = Path(__file__).resolve().parents[1]
-METADATA_FILE = ROOT / "data" / "metadata" / "metadata_parent_945.csv"
-OUT_DIR = ROOT / "results" / "reproduction_runs"
+ROOT = Path(r"d:/dyt/raman/pigeonite")
+METADATA_FILE = ROOT / "data" / "metadata_outputs" / "metadata_parent_945.csv"
+OUT_DIR = ROOT / "review_comparison_results"
 
 SEED = 2024
 MAX_SHIFT = 4000.0
 GRID_POINTS = 4100
 GRID = np.linspace(0.0, MAX_SHIFT, GRID_POINTS, dtype=np.float32)
+
+AUGMENTATION_PROTOCOL = {
+    "scope": "training split only; validation and test spectra are never augmented",
+    "physical_principle": "Raman band centers are not translated because band positions are diagnostic for a mineral phase.",
+    "band_detection": {
+        "signal": "baseline-corrected, max-normalized intensity within the valid spectral range",
+        "minimum_height": 0.05,
+        "minimum_prominence": 0.03,
+        "minimum_distance_cm-1": 8.0,
+        "maximum_bands_per_spectrum": 12,
+        "fallback": "if scipy.signal.find_peaks is unavailable, local maxima satisfying the same height threshold are used",
+    },
+    "transforms": {
+        "gamma_intensity_response": {"probability": 0.70, "gamma_range": [0.75, 1.35]},
+        "band_envelope_intensity_perturbation": {
+            "probability": 0.20,
+            "amplitude_range": [-0.08, 0.08],
+            "sigma_cm-1_range": [4.0, 10.0],
+            "center_shift_cm-1": 0.0,
+        },
+        "residual_baseline": {
+            "probability": 0.50,
+            "polynomial_order": 2,
+            "coefficient_std": [0.015, 0.020, 0.015],
+        },
+        "gaussian_read_noise": {"probability": 0.80, "sigma_range_after_normalization": [0.005, 0.025]},
+        "symmetric_broadening": {
+            "probability": 0.35,
+            "kernel": [0.08, 0.18, 0.48, 0.18, 0.08],
+            "mixing_alpha_range": [0.25, 0.65],
+        },
+        "weak_band_attenuation": {
+            "probability": 0.25,
+            "windows_per_spectrum": [1, 3],
+            "half_width_points_range": [8, 35],
+            "attenuation_factor_range": [0.75, 0.95],
+        },
+    },
+    "constraints": [
+        "no wavenumber-axis translation or interpolation jitter is applied during augmentation",
+        "regions outside original spectral coverage remain zeroed and masked",
+        "negative intensities are clipped to zero after perturbation",
+        "each augmented spectrum is renormalized to unit maximum within the valid range",
+        "first-derivative features are recomputed after intensity augmentation",
+    ],
+}
 
 EXCLUDE_QC_STATUSES = {"external_domain"}
 EXCLUDE_LABELS_REVIEW_READY = {"Halides"}
@@ -77,10 +128,7 @@ def fix_seed(seed: int = SEED) -> None:
 
 
 def read_spectrum(path: str) -> tuple[np.ndarray, np.ndarray]:
-    spectrum_path = Path(path)
-    if not spectrum_path.is_absolute():
-        spectrum_path = ROOT / spectrum_path
-    data = pd.read_csv(spectrum_path)
+    data = pd.read_csv(path)
     shift = pd.to_numeric(data.iloc[:, 0], errors="coerce").to_numpy(dtype=np.float64)
     inten = pd.to_numeric(data.iloc[:, 1], errors="coerce").to_numpy(dtype=np.float64)
     ok = np.isfinite(shift) & np.isfinite(inten)
@@ -159,8 +207,8 @@ def make_label(row: pd.Series, label_scheme: str) -> str:
     return label
 
 
-def load_metadata(label_scheme: str, include_review_required: bool) -> pd.DataFrame:
-    df = pd.read_csv(METADATA_FILE)
+def load_metadata(label_scheme: str, include_review_required: bool, metadata_file: Path = METADATA_FILE) -> pd.DataFrame:
+    df = pd.read_csv(metadata_file)
     df = df[df["file_exists"].astype(bool)].copy()
     df = df[~df["qc_status"].isin(EXCLUDE_QC_STATUSES)].copy()
 
@@ -251,7 +299,28 @@ def augment_raman_features(x: np.ndarray, key_padding_mask: np.ndarray) -> np.nd
         gamma = np.random.uniform(0.75, 1.35)
         intensity[valid] = np.power(np.clip(intensity[valid], 0.0, 1.0), gamma)
 
-    # Fluorescence/background residual after correction. No peak displacement.
+    # Local band-envelope perturbation changes relative band strength but not band center.
+    if np.random.rand() < 0.2:
+        valid_idx = np.where(valid)[0]
+        y_valid = intensity[valid_idx]
+        grid_step = float(np.median(np.diff(GRID))) if len(GRID) > 1 else 1.0
+        min_distance = max(1, int(round(8.0 / grid_step)))
+        if find_peaks is not None:
+            peaks_local, props = find_peaks(y_valid, height=0.05, prominence=0.03, distance=min_distance)
+            if len(peaks_local) > 12 and "prominences" in props:
+                keep = np.argsort(props["prominences"])[-12:]
+                peaks_local = peaks_local[keep]
+        else:
+            candidate = np.where((y_valid[1:-1] > y_valid[:-2]) & (y_valid[1:-1] >= y_valid[2:]) & (y_valid[1:-1] >= 0.05))[0] + 1
+            peaks_local = candidate[::min_distance][:12]
+        for peak_local in peaks_local:
+            center_idx = valid_idx[int(peak_local)]
+            sigma_cm = np.random.uniform(4.0, 10.0)
+            amp = np.random.uniform(-0.08, 0.08)
+            envelope = np.exp(-0.5 * ((GRID - GRID[center_idx]) / sigma_cm) ** 2).astype(np.float32)
+            intensity[valid] = intensity[valid] * (1.0 + amp * envelope[valid])
+
+    # Fluorescence/background residual after correction. No band displacement.
     if np.random.rand() < 0.5:
         xv = np.linspace(-1.0, 1.0, int(np.sum(valid)), dtype=np.float32)
         coef = np.random.normal(0.0, [0.015, 0.02, 0.015]).astype(np.float32)
@@ -408,12 +477,15 @@ def class_weights(y: np.ndarray, num_classes: int) -> torch.Tensor:
 def evaluate_arrays(y_true: np.ndarray, probs: np.ndarray, classes: Iterable[str], out_prefix: Path) -> dict:
     classes = list(classes)
     pred = np.argmax(probs, axis=1)
-    report = classification_report(y_true, pred, target_names=classes, output_dict=True, zero_division=0)
-    report_text = classification_report(y_true, pred, target_names=classes, zero_division=0)
+    label_ids = np.arange(len(classes))
+    report = classification_report(
+        y_true, pred, labels=label_ids, target_names=classes, output_dict=True, zero_division=0
+    )
+    report_text = classification_report(y_true, pred, labels=label_ids, target_names=classes, zero_division=0)
     out_prefix.with_suffix(".classification_report.txt").write_text(report_text, encoding="utf-8")
     pd.DataFrame(report).T.to_csv(out_prefix.with_suffix(".classification_report.csv"), encoding="utf-8-sig")
 
-    cm = confusion_matrix(y_true, pred, labels=np.arange(len(classes)))
+    cm = confusion_matrix(y_true, pred, labels=label_ids)
     pd.DataFrame(cm, index=classes, columns=classes).to_csv(out_prefix.with_suffix(".confusion_matrix.csv"), encoding="utf-8-sig")
 
     threshold_rows = []
@@ -608,7 +680,7 @@ def run_sklearn_models(
 
 def save_experiment_manifest(args: argparse.Namespace, df: pd.DataFrame, classes: list[str], out_dir: Path) -> None:
     manifest = {
-        "metadata_file": str(METADATA_FILE),
+        "metadata_file": str(args.metadata_file),
         "label_scheme": args.label_scheme,
         "include_review_required": args.include_review_required,
         "grid": {"min_cm-1": 0.0, "max_cm-1": MAX_SHIFT, "points": GRID_POINTS},
@@ -626,14 +698,7 @@ def save_experiment_manifest(args: argparse.Namespace, df: pd.DataFrame, classes
         "chemometric_stride": args.chemometric_stride,
         "train_time_augmentation": {
             "enabled": bool(args.augment),
-            "band_position_shift": "disabled",
-            "transforms": [
-                "relative intensity/gamma response",
-                "low-order residual baseline",
-                "conservative Gaussian noise",
-                "symmetric mild broadening preserving band centers",
-                "weak-band attenuation windows without translation",
-            ],
+            "protocol": AUGMENTATION_PROTOCOL,
         },
         "epochs": args.epochs,
         "batch_size": args.batch_size,
@@ -659,6 +724,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--chemometric-stride", type=int, default=4)
     parser.add_argument("--refresh-cache", action="store_true")
     parser.add_argument("--out-dir", type=Path, default=OUT_DIR)
+    parser.add_argument("--metadata-file", type=Path, default=METADATA_FILE)
     return parser.parse_args()
 
 
@@ -672,7 +738,7 @@ def main() -> None:
     log(f"Run directory: {run_dir}")
     log(f"Using device: {device}")
 
-    df = load_metadata(args.label_scheme, args.include_review_required)
+    df = load_metadata(args.label_scheme, args.include_review_required, args.metadata_file)
     log(f"Loaded {len(df)} spectra after QC/label filtering")
     classes = sorted(df["model_label"].unique())
     label_encoder = LabelEncoder()

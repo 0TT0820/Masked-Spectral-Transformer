@@ -1,0 +1,3 @@
+﻿target,n_spectra,zero_shot_accuracy,finetuned_loso_accuracy,true_labels
+Bellegarde,4,0.75,0.75,Sulfate:3; Phosphate:1
+Dourbes,27,0.5185185185185185,0.9629629629629629,Sulfate:27

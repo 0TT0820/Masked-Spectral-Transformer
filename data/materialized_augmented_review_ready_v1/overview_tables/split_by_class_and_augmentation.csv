@@ -1,0 +1,51 @@
+﻿split_main,model_label,is_augmented,n_spectra
+test,Carbonate,no,19
+test,Glass,no,2
+test,K-Feldspar,no,4
+test,Olivine,no,5
+test,Other Silicates,no,17
+test,Oxides/Hydroxides,no,8
+test,Phosphate,no,14
+test,Phyllosilicates,no,17
+test,Plagioclase,no,7
+test,Pyroxene,no,24
+test,Silica Phase,no,2
+test,Sulfate,no,14
+train,Borate,no,14
+train,Borate,yes,186
+train,Carbonate,no,82
+train,Carbonate,yes,118
+train,Glass,no,1
+train,Glass,yes,199
+train,K-Feldspar,no,38
+train,K-Feldspar,yes,162
+train,Olivine,no,33
+train,Olivine,yes,167
+train,Other Silicates,no,82
+train,Other Silicates,yes,118
+train,Oxides/Hydroxides,no,28
+train,Oxides/Hydroxides,yes,172
+train,Phosphate,no,28
+train,Phosphate,yes,172
+train,Phyllosilicates,no,96
+train,Phyllosilicates,yes,104
+train,Plagioclase,no,43
+train,Plagioclase,yes,157
+train,Pyroxene,no,109
+train,Pyroxene,yes,91
+train,Silica Phase,no,38
+train,Silica Phase,yes,162
+train,Sulfate,no,38
+train,Sulfate,yes,162
+val,Borate,no,1
+val,Carbonate,no,23
+val,K-Feldspar,no,5
+val,Olivine,no,15
+val,Other Silicates,no,17
+val,Oxides/Hydroxides,no,7
+val,Phosphate,no,5
+val,Phyllosilicates,no,20
+val,Plagioclase,no,8
+val,Pyroxene,no,20
+val,Silica Phase,no,8
+val,Sulfate,no,5

@@ -1,0 +1,189 @@
+{
+  "metadata_file": "d:\\dyt\\raman\\pigeonite\\data\\metadata_outputs\\metadata_parent_945.csv",
+  "label_scheme": "review_ready",
+  "include_review_required": false,
+  "grid": {
+    "min_cm-1": 0.0,
+    "max_cm-1": 4000.0,
+    "points": 4100
+  },
+  "preprocessing": {
+    "baseline": "poly",
+    "smooth_savgol": false,
+    "normalization": "nonnegative max normalization within valid spectral range",
+    "features": [
+      "intensity",
+      "first_derivative",
+      "valid_mask_channel_for_deep_models"
+    ],
+    "masking": "regions outside each spectrum original wavenumber coverage are zeroed and masked for transformer pooling"
+  },
+  "classes": [
+    "Borate",
+    "Carbonate",
+    "Glass",
+    "K-Feldspar",
+    "Olivine",
+    "Other Silicates",
+    "Oxides/Hydroxides",
+    "Phosphate",
+    "Phyllosilicates",
+    "Plagioclase",
+    "Pyroxene",
+    "Silica Phase",
+    "Sulfate"
+  ],
+  "split_counts": {
+    "train": 630,
+    "val": 134,
+    "test": 133
+  },
+  "class_by_split": {
+    "test": {
+      "Borate": 0,
+      "Carbonate": 19,
+      "Glass": 2,
+      "K-Feldspar": 4,
+      "Olivine": 5,
+      "Other Silicates": 17,
+      "Oxides/Hydroxides": 8,
+      "Phosphate": 14,
+      "Phyllosilicates": 17,
+      "Plagioclase": 7,
+      "Pyroxene": 24,
+      "Silica Phase": 2,
+      "Sulfate": 14
+    },
+    "train": {
+      "Borate": 14,
+      "Carbonate": 82,
+      "Glass": 1,
+      "K-Feldspar": 38,
+      "Olivine": 33,
+      "Other Silicates": 82,
+      "Oxides/Hydroxides": 28,
+      "Phosphate": 28,
+      "Phyllosilicates": 96,
+      "Plagioclase": 43,
+      "Pyroxene": 109,
+      "Silica Phase": 38,
+      "Sulfate": 38
+    },
+    "val": {
+      "Borate": 1,
+      "Carbonate": 23,
+      "Glass": 0,
+      "K-Feldspar": 5,
+      "Olivine": 15,
+      "Other Silicates": 17,
+      "Oxides/Hydroxides": 7,
+      "Phosphate": 5,
+      "Phyllosilicates": 20,
+      "Plagioclase": 8,
+      "Pyroxene": 20,
+      "Silica Phase": 8,
+      "Sulfate": 5
+    }
+  },
+  "models": [
+    "pca_svm",
+    "pls_da",
+    "random_forest",
+    "cnn",
+    "standard_transformer",
+    "mst"
+  ],
+  "chemometric_stride": 4,
+  "train_time_augmentation": {
+    "enabled": true,
+    "protocol": {
+      "scope": "training split only; validation and test spectra are never augmented",
+      "physical_principle": "Raman band centers are not translated because band positions are diagnostic for a mineral phase.",
+      "peak_detection": {
+        "signal": "baseline-corrected, max-normalized intensity within the valid spectral range",
+        "minimum_height": 0.05,
+        "minimum_prominence": 0.03,
+        "minimum_distance_cm-1": 8.0,
+        "maximum_bands_per_spectrum": 12,
+        "fallback": "if scipy.find_peaks is unavailable, local maxima satisfying the same height threshold are used"
+      },
+      "transforms": {
+        "gamma_intensity_response": {
+          "probability": 0.7,
+          "gamma_range": [
+            0.75,
+            1.35
+          ]
+        },
+        "peak_envelope_intensity_perturbation": {
+          "probability": 0.2,
+          "amplitude_range": [
+            -0.08,
+            0.08
+          ],
+          "sigma_cm-1_range": [
+            4.0,
+            10.0
+          ],
+          "center_shift_cm-1": 0.0
+        },
+        "residual_baseline": {
+          "probability": 0.5,
+          "polynomial_order": 2,
+          "coefficient_std": [
+            0.015,
+            0.02,
+            0.015
+          ]
+        },
+        "gaussian_read_noise": {
+          "probability": 0.8,
+          "sigma_range_after_normalization": [
+            0.005,
+            0.025
+          ]
+        },
+        "symmetric_broadening": {
+          "probability": 0.35,
+          "kernel": [
+            0.08,
+            0.18,
+            0.48,
+            0.18,
+            0.08
+          ],
+          "mixing_alpha_range": [
+            0.25,
+            0.65
+          ]
+        },
+        "weak_band_attenuation": {
+          "probability": 0.25,
+          "windows_per_spectrum": [
+            1,
+            3
+          ],
+          "half_width_points_range": [
+            8,
+            35
+          ],
+          "attenuation_factor_range": [
+            0.75,
+            0.95
+          ]
+        }
+      },
+      "constraints": [
+        "no wavenumber-axis translation or interpolation jitter is applied during augmentation",
+        "regions outside original spectral coverage remain zeroed and masked",
+        "negative intensities are clipped to zero after perturbation",
+        "each augmented spectrum is renormalized to unit maximum within the valid range",
+        "first-derivative features are recomputed after intensity augmentation"
+      ]
+    }
+  },
+  "epochs": 80,
+  "batch_size": 16,
+  "learning_rate": 3e-05,
+  "seed": 2024
+}

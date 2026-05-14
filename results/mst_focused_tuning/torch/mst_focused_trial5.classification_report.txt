@@ -1,0 +1,19 @@
+                   precision    recall  f1-score   support
+
+           Borate       0.00      0.00      0.00         0
+        Carbonate       0.95      0.95      0.95        19
+            Glass       0.00      0.00      0.00         2
+       K-Feldspar       1.00      1.00      1.00         4
+          Olivine       1.00      0.80      0.89         5
+  Other Silicates       1.00      0.59      0.74        17
+Oxides/Hydroxides       0.43      0.38      0.40         8
+        Phosphate       0.89      0.57      0.70        14
+  Phyllosilicates       0.57      0.47      0.52        17
+      Plagioclase       0.70      1.00      0.82         7
+         Pyroxene       0.85      0.96      0.90        24
+     Silica Phase       0.40      1.00      0.57         2
+          Sulfate       0.65      0.93      0.76        14
+
+         accuracy                           0.75       133
+        macro avg       0.65      0.66      0.63       133
+     weighted avg       0.79      0.75      0.75       133

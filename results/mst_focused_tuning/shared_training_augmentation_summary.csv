@@ -1,0 +1,14 @@
+﻿label_id,original_train_count,augmented_count,final_train_count,class
+0,14,186,200,Borate
+1,82,118,200,Carbonate
+2,1,199,200,Glass
+3,38,162,200,K-Feldspar
+4,33,167,200,Olivine
+5,82,118,200,Other Silicates
+6,28,172,200,Oxides/Hydroxides
+7,28,172,200,Phosphate
+8,96,104,200,Phyllosilicates
+9,43,157,200,Plagioclase
+10,109,91,200,Pyroxene
+11,38,162,200,Silica Phase
+12,38,162,200,Sulfate
