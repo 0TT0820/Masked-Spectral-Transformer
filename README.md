@@ -25,6 +25,9 @@ publication_repo/
     figures/                   Figures extracted from the manuscript
   docs/
     augmentation_rationale.md  Physical basis and limits of augmentation
+    dataset_and_experiment_map.md
+                                Map from reviewer comments to data, scripts,
+                                result tables, and manuscript use
     data_guide.md              Dataset provenance and metadata fields
     reproducibility.md         Commands used to reproduce model tables
     user_guide.md              Inputs, outputs, options, and expected behaviour
@@ -92,6 +95,9 @@ python src/train_review_comparison.py --models pca_svm pls_da --baseline poly --
 
 The latest revision artifacts added for the resubmission are organized by
 reviewer concern:
+
+- Data/file map for reviewers and coauthors:
+  `docs/dataset_and_experiment_map.md`
 
 - Baseline adequacy and hyperparameter selection:
   `results/reviewer_requested_baselines/`
