@@ -1,0 +1,31 @@
+{
+  "metadata_file": "data\\augmented_spectra_v3\\metadata_augmented_training.csv",
+  "label_scheme": "curated",
+  "classes": [
+    "Borate",
+    "Carbonate",
+    "Glass",
+    "K-Feldspar",
+    "Olivine",
+    "Other Silicates",
+    "Oxides/Hydroxides",
+    "Phosphate",
+    "Phyllosilicates",
+    "Plagioclase",
+    "Pyroxene",
+    "Silica Phase",
+    "Sulfate"
+  ],
+  "selection_rule": "best validation macro-F1 within each model family; report selected test metrics",
+  "shared_training_augmentation": {
+    "min_per_class": 200,
+    "max_per_class": 260,
+    "original_train_rows": 2600,
+    "augmented_train_rows": 2600,
+    "applied_to_all_models": true,
+    "band_positions_shifted": false
+  },
+  "epochs_for_torch_trials": 120,
+  "batch_size": 24,
+  "seed": 2024
+}

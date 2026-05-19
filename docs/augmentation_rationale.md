@@ -8,7 +8,7 @@ The augmentation script instead simulates effects that are common in Raman spect
 
 - relative intensity variation caused by crystal orientation, grain size, focus, optical coupling, excitation wavelength, and detector response;
 - weak residual fluorescence or background curvature after baseline correction;
-- read noise and shot-noise-like perturbations at conservative normalized levels;
+- Gaussian read-noise-like perturbations at conservative normalized levels;
 - mild symmetric broadening or smoothing that preserves band centers;
 - partial attenuation of weak bands to mimic low signal-to-noise or mixed-pixel effects.
 
@@ -24,6 +24,22 @@ The following transforms are intentionally avoided in the default workflow:
 This design reduces the risk that overly aggressive augmentation creates non-physical spectra or teaches the model artifacts rather than mineralogical variability.
 
 ## Reproducible Augmentation
+
+The exact operation probabilities and parameter ranges are:
+
+| Operation | Probability | Parameter range | Constraint |
+| --- | ---: | --- | --- |
+| Gamma intensity response | 0.70 | gamma = 0.75-1.35 | Changes normalized intensity only |
+| Band-envelope intensity perturbation | 0.20 | amplitude = -0.08 to 0.08; sigma = 4-10 cm^-1; center shift = 0 cm^-1 | Perturbs relative band strength without moving band centers |
+| Residual baseline | 0.50 | second-order polynomial over [-1, 1]; coefficient std = [0.015, 0.020, 0.015] | Simulates small residual continuum after baseline correction |
+| Gaussian read noise | 0.80 | sigma = 0.005-0.025 after normalization | Valid spectral range only |
+| Symmetric broadening | 0.35 | kernel = [0.08, 0.18, 0.48, 0.18, 0.08]; alpha = 0.25-0.65 | Symmetric kernel preserves band centers |
+| Weak-band attenuation | 0.25 | 1-3 windows; half-width = 8-35 grid points; attenuation = 0.75-0.95 | No new bands and no band shifts |
+
+Candidate Raman bands are detected on the baseline-corrected, max-normalized
+intensity using minimum height 0.05, minimum prominence 0.03, minimum separation
+8 cm^-1, and a maximum of 12 bands per spectrum. The detected bands are used
+only as fixed anchors for local intensity perturbation.
 
 Run:
 

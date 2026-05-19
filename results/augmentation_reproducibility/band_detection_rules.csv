@@ -1,0 +1,7 @@
+﻿item,value,note
+input_signal,"baseline-corrected, max-normalized intensity within the valid spectral range",The same preprocessed normalized intensity channel used by model training is used for band detection.
+minimum_height,0.05,Height threshold after max-normalization.
+minimum_prominence,0.03,Prominence threshold after max-normalization.
+minimum_distance_cm-1,8.0,Equivalent to approximately 8 grid points on the 0.976 cm-1 grid.
+maximum_bands_per_spectrum,12,"If more bands are detected, the most prominent bands are retained."
+fallback,"if scipy.signal.find_peaks is unavailable, local maxima satisfying the same height threshold are used",Used only if scipy.signal.find_peaks is unavailable.

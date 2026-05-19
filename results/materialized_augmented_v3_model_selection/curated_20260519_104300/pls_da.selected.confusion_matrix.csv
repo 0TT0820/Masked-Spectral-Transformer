@@ -1,0 +1,14 @@
+﻿,Borate,Carbonate,Glass,K-Feldspar,Olivine,Other Silicates,Oxides/Hydroxides,Phosphate,Phyllosilicates,Plagioclase,Pyroxene,Silica Phase,Sulfate
+Borate,0,0,0,0,0,0,0,0,0,0,0,0,0
+Carbonate,0,17,0,0,0,0,0,1,0,0,0,1,0
+Glass,0,0,0,0,1,0,0,0,0,0,1,0,0
+K-Feldspar,0,0,0,0,0,0,0,0,0,4,0,0,0
+Olivine,0,0,0,0,4,0,0,0,0,0,0,0,1
+Other Silicates,1,2,0,0,1,4,3,2,0,2,1,0,1
+Oxides/Hydroxides,0,0,0,0,0,0,3,3,1,0,0,0,1
+Phosphate,0,3,0,0,1,0,1,7,0,0,1,1,0
+Phyllosilicates,1,0,0,0,0,0,5,4,2,2,0,3,0
+Plagioclase,0,0,0,0,0,0,0,0,0,7,0,0,0
+Pyroxene,0,0,0,0,0,0,1,0,0,1,21,1,0
+Silica Phase,0,0,0,0,0,0,0,0,0,0,0,2,0
+Sulfate,0,6,0,0,0,0,0,1,0,0,1,0,6

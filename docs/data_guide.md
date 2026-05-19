@@ -63,12 +63,45 @@ The source inventory is summarized in:
 data/overview/parent_by_source_type.csv
 ```
 
-Current source counts:
+Current parent source counts:
 
 - RRUFF database: 791 spectra
 - Laboratory-acquired DUV spectra: 119 spectra
 - SHERLOC in-situ spectra: 31 spectra
 - Martian meteorite spectra: 4 spectra
+
+After adding the SHERLOC point-level fine-tuning dataset, traceable Martian
+meteorite supplements, and SHERLOC SaU 008 DUV calibration-target spectra, the
+current all-source training database is:
+
+```text
+data/metadata/metadata_training_database_v2_all_sources.csv
+```
+
+Current all-source metadata rows in that table:
+
+- RRUFF database: 791 spectra
+- SHERLOC in-situ Mars 2020: 730 spectra
+- Laboratory-acquired DUV spectra: 119 spectra
+- Martian meteorite spectra: 7 spectra
+- SHERLOC calibration target Mars meteorite SaU 008: 36 spectra
+
+The current DUV-only spectral library is:
+
+```text
+data/metadata/metadata_duv_training_library_v1.csv
+```
+
+It contains 885 DUV spectra: 849 rows with supervised labels and 36 SaU 008
+calibration-target rows reserved for unlabeled domain adaptation/manual review.
+The key role columns are `source_domain`, `training_role`,
+`supervised_label_usable_v2`, `duv_library_include`, and `split_v2`.
+
+Summary tables are stored in:
+
+```text
+data/overview/training_database_v2/
+```
 
 ## Split Policy
 
@@ -114,6 +147,9 @@ Supporting files are:
 ```text
 data/metadata/metadata_sherloc_region_points_only.csv
 data/metadata/sherloc_region_detail_to_ss_mapping.csv
+data/metadata/sherloc_pds_product_provenance.csv
+data/metadata/sherloc_pds_product_provenance_readme.md
+data/metadata/sherloc_spectrum_to_pds_crosswalk.csv
 data/metadata/sherloc_region_point_extraction_manifest.csv
 data/metadata/sherloc_region_table1_training_summary.csv
 data/overview/sherloc_regions/
@@ -128,6 +164,120 @@ the same spectrum path but separate label rows.
 
 These SHERLOC spectra are intended for in-situ adaptation and independent
 region/target transfer experiments, not for generating synthetic augmentation.
+
+## SHERLOC SaU 008 Calibration-Target DUV Dataset
+
+SHERLOC calibration observations of the Mars meteorite SaU 008 target are
+included as real SHERLOC DUV spectra in the DUV library:
+
+```text
+data/metadata/metadata_sherloc_sau008_calibration_mean_spectra.csv
+data/metadata/metadata_sherloc_sau008_calibration_point_index.csv
+data/sherloc_sau008_calibration/mean_spectra/
+data/overview/sherloc_sau008_calibration/
+```
+
+These rows are PDS-traceable and useful for domain adaptation, instrument-domain
+inspection, and calibration-target review. They are not used as closed-set
+supervised mineral labels because the PDS RRS products do not provide
+point-level mineral assignments for the extracted spectra.
+
+The processing script is:
+
+```text
+src/build_sherloc_sau008_calibration_dataset.py
+```
+
+The consolidated all-source and DUV-library tables can be regenerated with:
+
+```text
+src/build_training_database_v2.py
+```
+
+### Montpezat and Alfalfa Candidate Spectra
+
+Montpezat and Alfalfa are documented separately because the public paper gives
+scan-level mineral detections but does not provide the point-level label
+spreadsheet used above for Dourbes, Garde/Bellegarde, Guillaumes, and Quartier.
+Their PDS-traceable candidate products are recorded in:
+
+```text
+data/metadata/sherloc_montpezat_alfalfa_pds_products.csv
+data/metadata/metadata_sherloc_montpezat_alfalfa_weak_candidates.csv
+data/metadata/sherloc_montpezat_alfalfa_candidate_summary.csv
+data/metadata/sherloc_montpezat_alfalfa_candidate_readme.md
+data/sherloc_montpezat_alfalfa_candidates/
+```
+
+The candidate rows are appended only to the reference table:
+
+```text
+data/metadata/metadata_parent_945_plus_sherloc_regions_with_montpezat_alfalfa_candidates.csv
+```
+
+They are marked `sherloc_training_label_usable=False` because their labels are
+scan-level weak labels, not point-level mineral assignments. They should not be
+used in the default closed-set fine-tuning experiment unless point-level labels
+are curated later.
+
+## Martian Meteorite Mendeley Supplement
+
+Additional public Martian meteorite Raman data were screened from Mendeley
+Data. Only records with explicit mineral labels are added to the supervised
+training-ready metadata:
+
+```text
+data/metadata/metadata_martian_meteorite_mendeley_supervised_supplement.csv
+data/metadata/metadata_training_ready_plus_martian_meteorite_mendeley.csv
+data/spectra/martian_meteorite_mendeley/
+```
+
+The usable supervised supplement contains three spectra from the CC BY 4.0
+dataset DOI `10.17632/c6t3v22x2x.1`: ilmenite, magnetite, and
+titanomagnetite. All three are mapped to the manuscript Table 1 superclass
+`Oxides/Hydroxides`.
+
+A second Mendeley dataset, DOI `10.17632/97hjg7hcft.1`, contains 11 paired
+wavenumber-intensity spectra for the same MIL paired Martian meteorites, but
+the downloaded workbook does not provide per-spectrum mineral labels. These
+spectra are therefore retained only as non-training candidates:
+
+```text
+data/metadata/metadata_martian_meteorite_mendeley_unlabeled_candidates.csv
+data/spectra/martian_meteorite_mendeley/unlabeled_candidates_97hjg7hcft/
+```
+
+The processing script is:
+
+```text
+src/build_martian_meteorite_mendeley_supplement.py
+```
+
+## SHERLOC PDS Product Provenance
+
+The SHERLOC products are traced at PDS product level in:
+
+```text
+data/metadata/sherloc_pds_product_provenance.csv
+data/metadata/sherloc_spectrum_to_pds_crosswalk.csv
+```
+
+The table was generated with:
+
+```text
+src/build_sherloc_pds_provenance.py
+```
+
+Each row of `sherloc_pds_product_provenance.csv` corresponds to one unique Mars
+2020 SHERLOC `RRS` processed spectroscopy product. The table includes the PDS
+logical identifier, direct CSV and XML label URLs, bundle DOI, sol, SCLK,
+site/drive, SRLC sequence, processing flags, observation time from the XML
+label, and upstream raw/intermediate PDS logical identifiers.
+
+Each row of `sherloc_spectrum_to_pds_crosswalk.csv` corresponds to one local
+SHERLOC point spectrum record. Local point spectra are therefore traceable from
+the repository row, through the local `ss__...` filename, to the authoritative
+PDS4 XML label.
 
 ## Quality-Control Notes
 

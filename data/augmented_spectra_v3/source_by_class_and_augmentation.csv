@@ -1,0 +1,54 @@
+﻿source_type,model_label,is_augmented,n_spectra
+Lab-acquired DUV spectra,Borate,no,3
+Lab-acquired DUV spectra,Carbonate,no,18
+Lab-acquired DUV spectra,Glass,no,2
+Lab-acquired DUV spectra,K-Feldspar,no,4
+Lab-acquired DUV spectra,Olivine,no,6
+Lab-acquired DUV spectra,Other Silicates,no,4
+Lab-acquired DUV spectra,Oxides/Hydroxides,no,6
+Lab-acquired DUV spectra,Phosphate,no,2
+Lab-acquired DUV spectra,Phyllosilicates,no,20
+Lab-acquired DUV spectra,Plagioclase,no,4
+Lab-acquired DUV spectra,Pyroxene,no,8
+Lab-acquired DUV spectra,Silica Phase,no,4
+Lab-acquired DUV spectra,Sulfate,no,27
+Martian meteorite spectra,Glass,no,1
+Martian meteorite spectra,Oxides/Hydroxides,no,2
+Martian meteorite spectra,Pyroxene,no,1
+RRUFF database,Borate,no,12
+RRUFF database,Carbonate,no,106
+RRUFF database,K-Feldspar,no,43
+RRUFF database,Olivine,no,47
+RRUFF database,Other Silicates,no,112
+RRUFF database,Oxides/Hydroxides,no,35
+RRUFF database,Phosphate,no,45
+RRUFF database,Phyllosilicates,no,113
+RRUFF database,Plagioclase,no,54
+RRUFF database,Pyroxene,no,144
+RRUFF database,Silica Phase,no,44
+RRUFF database,Sulfate,no,30
+Raman-aware augmentation of Lab-acquired DUV spectra,Borate,yes,37
+Raman-aware augmentation of Lab-acquired DUV spectra,Carbonate,yes,14
+Raman-aware augmentation of Lab-acquired DUV spectra,K-Feldspar,yes,6
+Raman-aware augmentation of Lab-acquired DUV spectra,Olivine,yes,24
+Raman-aware augmentation of Lab-acquired DUV spectra,Other Silicates,yes,3
+Raman-aware augmentation of Lab-acquired DUV spectra,Oxides/Hydroxides,yes,33
+Raman-aware augmentation of Lab-acquired DUV spectra,Phosphate,yes,13
+Raman-aware augmentation of Lab-acquired DUV spectra,Phyllosilicates,yes,14
+Raman-aware augmentation of Lab-acquired DUV spectra,Plagioclase,yes,8
+Raman-aware augmentation of Lab-acquired DUV spectra,Pyroxene,yes,5
+Raman-aware augmentation of Lab-acquired DUV spectra,Silica Phase,yes,8
+Raman-aware augmentation of Lab-acquired DUV spectra,Sulfate,yes,73
+Raman-aware augmentation of Martian meteorite spectra,Glass,yes,199
+Raman-aware augmentation of RRUFF database,Borate,yes,149
+Raman-aware augmentation of RRUFF database,Carbonate,yes,104
+Raman-aware augmentation of RRUFF database,K-Feldspar,yes,156
+Raman-aware augmentation of RRUFF database,Olivine,yes,143
+Raman-aware augmentation of RRUFF database,Other Silicates,yes,115
+Raman-aware augmentation of RRUFF database,Oxides/Hydroxides,yes,139
+Raman-aware augmentation of RRUFF database,Phosphate,yes,159
+Raman-aware augmentation of RRUFF database,Phyllosilicates,yes,90
+Raman-aware augmentation of RRUFF database,Plagioclase,yes,149
+Raman-aware augmentation of RRUFF database,Pyroxene,yes,86
+Raman-aware augmentation of RRUFF database,Silica Phase,yes,154
+Raman-aware augmentation of RRUFF database,Sulfate,yes,89

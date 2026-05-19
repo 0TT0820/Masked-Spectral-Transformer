@@ -1,0 +1,13 @@
+                 precision    recall  f1-score   support
+
+      Carbonate       0.43      0.50      0.46        30
+        Olivine       1.00      0.80      0.89        25
+Other Silicates       0.05      0.12      0.07         8
+    Perchlorate       0.00      0.00      0.00         1
+      Phosphate       0.00      0.00      0.00         0
+       Pyroxene       0.00      0.00      0.00         0
+        Sulfate       0.90      0.74      0.81        82
+
+       accuracy                           0.66       146
+      macro avg       0.34      0.31      0.32       146
+   weighted avg       0.77      0.66      0.71       146

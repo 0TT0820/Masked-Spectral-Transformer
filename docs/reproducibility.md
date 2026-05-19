@@ -35,10 +35,25 @@ results/model_benchmarks/best_observed_grid_summary.csv
 results/model_benchmarks/hyperparameter_selection_summary.md
 ```
 
-To rerun the same family of experiments:
+To rerun the current materialized-augmentation benchmark:
 
 ```bash
-python src/run_model_selection.py
+python src/augment_raman_dataset.py \
+  --metadata data/metadata/metadata_parent_945.csv \
+  --out-dir data/augmented_spectra_v3 \
+  --target-per-class 200 \
+  --seed 2024
+
+python src/run_model_selection.py \
+  --metadata-file data/augmented_spectra_v3/metadata_augmented_training.csv \
+  --out-dir results/materialized_augmented_v3_model_selection \
+  --baseline none \
+  --min-per-class 200 \
+  --max-per-class 260 \
+  --epochs 120 \
+  --batch-size 24 \
+  --refresh-cache
+
 python src/summarize_model_benchmarks.py
 python src/summarize_hyperparameter_selection.py
 ```
@@ -50,25 +65,52 @@ per spectrum. Validation and test spectra remain original spectra; augmentation
 is applied only to the training split.
 
 ```bash
-python src/build_materialized_augmented_dataset.py \
-  --metadata-file data/metadata/metadata_parent_945.csv \
-  --out-dir data/materialized_augmented_v1 \
-  --min-train-per-class 200 \
-  --baseline poly
+python src/augment_raman_dataset.py \
+  --metadata data/metadata/metadata_parent_945.csv \
+  --out-dir data/augmented_spectra_v3 \
+  --target-per-class 200 \
+  --seed 2024
 ```
 
 The resulting master metadata table is:
 
 ```text
-data/materialized_augmented_v1/metadata_materialized_augmented.csv
+data/augmented_spectra_v3/metadata_augmented_training.csv
 ```
 
-Each spectrum file contains the model-ready point-wise values:
+Each spectrum file contains point-wise Raman-shift and normalized-intensity
+values. Original validation and test spectra are preprocessed and materialized
+without stochastic augmentation, while training spectra include both the
+preprocessed parent spectra and deterministic augmented derivatives.
 
-- `raman_shift_cm-1`
-- `intensity_normalized`
-- `first_derivative_normalized`
-- `valid_mask`
+The current materialized dataset contains 897 original spectra and 1,970
+augmented training spectra, for 2,867 rows in the combined metadata table.
+
+## SHERLOC In-Situ Model Comparison
+
+The pooled labeled SHERLOC in-situ validation compares the same
+reviewer-requested model families as the reference benchmark: PCA-SVM, PLS-DA,
+1D-CNN, Standard Transformer, and MST. It uses repeated random splits over the
+pooled labeled SHERLOC spectra and should be interpreted as within-domain
+SHERLOC adaptation validation, not as independent target-transfer validation.
+
+```bash
+python src/run_sherloc_in_situ_model_comparison_v3.py \
+  --metadata-file data/metadata/metadata_training_database_v2_all_sources.csv \
+  --out-dir results/sherloc_in_situ_model_comparison_v3 \
+  --variant despike_sg11_asls \
+  --seeds 2024 2025 2026 \
+  --epochs 60 \
+  --batch-size 32
+```
+
+The key outputs are:
+
+```text
+results/sherloc_in_situ_model_comparison_v3/sherloc_in_situ_model_comparison_aggregate.csv
+results/sherloc_in_situ_model_comparison_v3/sherloc_in_situ_key_thresholds.csv
+results/sherloc_in_situ_model_comparison_v3/sherloc_in_situ_validation_predictions.csv
+```
 
 ## SHERLOC Fine-Tuning Protocol
 
@@ -114,6 +156,22 @@ The key table for manuscript reporting is:
 
 ```text
 results/confidence_threshold_analysis/parent_test_key_thresholds_all_requested_models.csv
+```
+
+For the final materialized-augmentation benchmark and the pooled SHERLOC
+in-situ validation, run:
+
+```bash
+python src/summarize_materialized_v3_confidence_thresholds.py
+```
+
+The combined key-threshold tables are:
+
+```text
+results/confidence_threshold_materialized_v3/reference_test_key_thresholds_requested_models.csv
+results/confidence_threshold_materialized_v3/sherloc_in_situ_key_thresholds_requested_models.csv
+results/confidence_threshold_materialized_v3/combined_key_thresholds_requested_models.csv
+results/confidence_threshold_materialized_v3/confidence_threshold_summary.md
 ```
 
 ## Current Best Summary

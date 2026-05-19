@@ -1,0 +1,34 @@
+﻿label_category_final,raman_qc_decision,n_spectra
+Borate,main_training_keep,13
+Borate,manual_review_keep_in_metadata,2
+Carbonate,main_training_keep,223
+Carbonate,manual_review_keep_in_metadata,52
+Clay,main_training_keep,41
+Clay,manual_review_keep_in_metadata,26
+Glass,main_training_keep,3
+Halides,exclude_from_closed_set,17
+K-Feldspar,main_training_keep,37
+K-Feldspar,manual_review_keep_in_metadata,10
+Mica,main_training_keep,45
+Mica,manual_review_keep_in_metadata,7
+Olivine,main_training_keep,159
+Olivine,manual_review_keep_in_metadata,19
+Other Silicate,main_training_keep,38
+Other Silicates,main_training_keep,95
+Other Silicates,manual_review_keep_in_metadata,21
+Oxides/Hydroxides,main_training_keep,44
+Oxides/Hydroxides,manual_review_keep_in_metadata,2
+Perchlorate,main_training_keep,3
+Phosphate,main_training_keep,44
+Phosphate,manual_review_keep_in_metadata,4
+Plagioclase,main_training_keep,35
+Plagioclase,manual_review_keep_in_metadata,23
+Pyroxene,main_training_keep,110
+Pyroxene,manual_review_keep_in_metadata,45
+Serpentine,main_training_keep,10
+Serpentine,manual_review_keep_in_metadata,4
+Silica Phase,main_training_keep,15
+Silica Phase,manual_review_keep_in_metadata,33
+Sulfate,main_training_keep,452
+Sulfate,manual_review_keep_in_metadata,15
+,main_training_keep,36

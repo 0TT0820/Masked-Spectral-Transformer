@@ -327,7 +327,7 @@ def augment_raman_features(x: np.ndarray, key_padding_mask: np.ndarray) -> np.nd
         baseline = coef[0] + coef[1] * xv + coef[2] * xv * xv
         intensity[valid] = intensity[valid] + baseline
 
-    # Shot/read noise at a conservative normalized scale.
+    # Read-noise-like perturbation at a conservative normalized scale.
     if np.random.rand() < 0.8:
         sigma = np.random.uniform(0.005, 0.025)
         intensity[valid] = intensity[valid] + np.random.normal(0.0, sigma, int(np.sum(valid))).astype(np.float32)

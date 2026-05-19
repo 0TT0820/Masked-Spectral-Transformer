@@ -1,0 +1,9 @@
+﻿split_v2,raman_qc_decision,n_spectra
+domain_adaptation_only,main_training_keep,36
+reference_qc_excluded,exclude_from_closed_set,17
+reference_qc_excluded,manual_review_keep_in_metadata,263
+sherloc_external_validation,main_training_keep,31
+sherloc_finetune_pool,main_training_keep,699
+test,main_training_keep,91
+train,main_training_keep,454
+val,main_training_keep,92

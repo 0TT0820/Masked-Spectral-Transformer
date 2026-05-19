@@ -20,7 +20,11 @@ publication_repo/
     metadata/                 Spectrum-level metadata and split files
     overview/                  Data-source and augmentation overview tables
       data_inventory/   Detailed provenance and data-flow tables
+      training_database_v2/
+                                All-source and DUV-library count tables
     spectra/parent/            945 non-compressed parent Raman spectra
+    sherloc_sau008_calibration/
+                                SHERLOC SaU 008 calibration-target mean spectra
   assets/
     figures/                   Figures extracted from the manuscript
   docs/
@@ -38,11 +42,24 @@ publication_repo/
     confidence_threshold_analysis/
                                 Precision/recall/FPR/coverage scans for
                                 confidence-aware operating thresholds
+    confidence_threshold_materialized_v3/
+                                Final key operating thresholds for the
+                                materialized reference benchmark and SHERLOC
+                                in-situ pooled validation
+    review_updated_training_v2/
+                                Updated reviewer-oriented rerun on the v2
+                                all-source and SHERLOC DUV training database
+    sherloc_in_situ_model_comparison_v3/
+                                PCA-SVM, PLS-DA, CNN, Transformer, and MST
+                                comparison on pooled labeled SHERLOC in-situ
+                                spectra
     sherloc_finetune/           SHERLOC region fine-tuning and LOSO transfer
     mst_focused_tuning/         MST-focused tuning artifacts without weights
   src/
     train_model_comparison.py Model comparison and evaluation script
     augment_raman_dataset.py   Reproducible Raman-aware augmentation script
+    build_training_database_v2.py
+                                Rebuilds the all-source and DUV training tables
   LICENSE
   DATA_LICENSE.md
   README.md
@@ -83,6 +100,13 @@ Generate Raman-aware augmented spectra with parent-level lineage:
 python src/augment_raman_dataset.py --target-per-class 200 --seed 2024
 ```
 
+Rebuild the current all-source training database and DUV spectral library:
+
+```bash
+python src/build_sherloc_sau008_calibration_dataset.py
+python src/build_training_database_v2.py
+```
+
 Run a fast smoke test:
 
 ```bash
@@ -102,26 +126,64 @@ The main project components are:
 - Model benchmarks and hyperparameter selection:
   `results/model_benchmarks/`
 - Materialized, point-wise augmented spectra:
-  `data/materialized_augmented_v1/`
+  `data/augmented_spectra_v3/`
+- Final materialized-augmentation model selection:
+  `results/materialized_augmented_v3_model_selection/`
 - SHERLOC region labels and fine-tuning inputs:
   `data/metadata/metadata_parent_945_plus_sherloc_regions_table1_training_ready.csv`
   and `data/overview/sherloc_regions/`
+- Current all-source training database:
+  `data/metadata/metadata_training_database_v2_all_sources.csv`
+- Current DUV spectral library for supervised DUV training, SHERLOC fine-tuning,
+  and unlabeled SHERLOC domain adaptation:
+  `data/metadata/metadata_duv_training_library_v1.csv`
+  and `data/overview/training_database_v2/`
+- SHERLOC SaU 008 calibration-target DUV spectra:
+  `data/metadata/metadata_sherloc_sau008_calibration_mean_spectra.csv`
+  and `data/overview/sherloc_sau008_calibration/`
+- Caltech/JPL SHERLOC-analog 62-mineral library import audit:
+  `data/metadata/metadata_caltech_sherloc_duv_62min_import_audit.csv`
+  and `docs/caltech_sherloc_duv_62min_import_status.md`
+- Montpezat/Alfalfa PDS-traceable weak-label candidates:
+  `data/metadata/metadata_sherloc_montpezat_alfalfa_weak_candidates.csv`
+  and `data/metadata/sherloc_montpezat_alfalfa_pds_products.csv`
 - SHERLOC fine-tuning and leave-one-target/region summaries:
   `results/sherloc_finetune/`
 - Confidence-threshold and rejection analysis:
   `results/confidence_threshold_analysis/`
+- Final confidence-threshold tables for the materialized benchmark and pooled
+  SHERLOC in-situ validation:
+  `results/confidence_threshold_materialized_v3/`
+- Pooled labeled SHERLOC in-situ model comparison:
+  `results/sherloc_in_situ_model_comparison_v3/`
 - MST-focused tuning records, excluding large model weights:
   `results/mst_focused_tuning/`
+- Updated reviewer-oriented rerun on the v2 all-source and SHERLOC DUV
+  training database:
+  `results/review_updated_training_v2/`
 
 The corresponding scripts are in `src/`:
 
 ```text
+augment_raman_dataset.py
 build_materialized_augmented_dataset.py
 build_sherloc_region_dataset.py
+build_sherloc_pds_provenance.py
+build_sherloc_montpezat_alfalfa_candidates.py
+build_sherloc_sau008_calibration_dataset.py
+build_training_database_v2.py
 run_model_selection.py
 run_sherloc_finetune_protocol.py
 run_confidence_threshold_analysis.py
 run_mst_focused_tuning.py
+run_review_updated_training_v2.py
+run_mst_extra_v2.py
+run_sherloc_preprocessing_trials_v2.py
+run_sherloc_adaptation_strategies_v2.py
+analyze_sherloc_operating_points_v2.py
+run_sherloc_pooled_random_validation_v2.py
+run_sherloc_in_situ_model_comparison_v3.py
+summarize_materialized_v3_confidence_thresholds.py
 summarize_model_benchmarks.py
 summarize_hyperparameter_selection.py
 summarize_all_requested_confidence_thresholds.py
@@ -129,13 +191,25 @@ summarize_all_requested_confidence_thresholds.py
 
 ## Main Result Summary
 
-The current best model summary is provided in:
+The final materialized-augmentation model-selection summary is provided in:
 
 ```text
-results/model_comparison/best_by_model_summary.csv
+results/materialized_augmented_v3_model_selection/curated_20260519_104300/reviewer_requested_model_test_summary.csv
 ```
 
-In the current group-wise split, MST gives the strongest macro-F1 among the tested models, while Random Forest gives a similar accuracy but lower macro-F1.
+The reviewer-requested comparison includes PCA-SVM, PLS-DA, 1D-CNN, Standard
+Transformer, and MST. On the held-out reference test split, MST and Standard
+Transformer have the same accuracy (0.767), while MST has the higher macro-F1
+(0.658 versus 0.634). A separate pooled labeled SHERLOC in-situ random-split
+validation is archived in `results/sherloc_in_situ_model_comparison_v3/`; in
+that within-domain SHERLOC setting, MST gives the highest mean weighted-F1 and
+present-label macro-F1 among the tested models.
+
+The final confidence-threshold summaries are provided in:
+
+```text
+results/confidence_threshold_materialized_v3/
+```
 
 ![MST architecture](assets/figures/figure_02_mst_architecture.png)
 
@@ -149,6 +223,29 @@ The parent dataset contains 945 spectra:
 - Martian meteorite spectra: 4 spectra
 
 See `docs/data_guide.md` and `data/overview/parent_by_source_type.csv` for details.
+
+The current training database extends the parent inventory with additional
+PDS-traceable SHERLOC DUV products:
+
+- All-source metadata rows: 1,683
+- DUV spectral-library rows: 885
+- DUV rows usable as supervised labels: 849
+- DUV rows reserved for unlabeled domain adaptation or manual review: 36
+
+The DUV spectral library merges laboratory DUV spectra, labeled SHERLOC
+in-situ Mars 2020 spectra, and SHERLOC SaU 008 calibration-target spectra.
+Rows are not treated identically during training: labeled laboratory and
+in-situ rows can be used for supervised mineral classification or SHERLOC
+fine-tuning, whereas SaU 008 rows are real SHERLOC DUV calibration-target
+measurements but do not provide point-level mineral labels in the PDS products
+and are therefore marked for domain adaptation/manual review only.
+
+```text
+data/metadata/metadata_training_database_v2_all_sources.csv
+data/metadata/metadata_duv_training_library_v1.csv
+data/overview/training_database_v2/
+docs/training_database_v2.md
+```
 
 ### Raw Data Visibility
 
@@ -174,6 +271,8 @@ data/overview/parent_by_source_type.csv
 data/overview/parent_by_source_and_category.csv
 data/overview/parent_by_excitation_and_source.csv
 data/overview/parent_provenance_inventory.csv
+data/metadata/sherloc_pds_product_provenance.csv
+data/metadata/sherloc_spectrum_to_pds_crosswalk.csv
 data/overview/data_inventory/dataset_stage_summary.csv
 data/overview/data_inventory/dataset_flow_by_class.csv
 data/overview/data_inventory/spectrum_level_provenance.csv
@@ -184,6 +283,19 @@ No `.zip`, `.rar`, or `.7z` archive is required to inspect the dataset.
 The detailed inventory separates raw parent spectra, Earth-domain train/validation/test spectra, reproducible augmentation targets, SHERLOC external/candidate transfer groups, and excluded halide spectra.
 
 RRUFF-derived spectra include official header metadata parsed from the downloaded RRUFF text spectra, including mineral name, chemistry, locality, source collection, owner, identification status, and official RRUFF URL.
+
+SHERLOC-derived spectra include PDS product-level provenance in
+`data/metadata/sherloc_pds_product_provenance.csv`, including direct PDS CSV and
+XML label URLs, PDS logical identifiers, bundle DOI, observation times, and
+upstream raw/intermediate product logical identifiers. The companion
+`data/metadata/sherloc_spectrum_to_pds_crosswalk.csv` links each local point
+spectrum row to the corresponding PDS product.
+
+Montpezat and Alfalfa products from Figure 4/related SHERLOC target analyses
+are included as a separate weak-label candidate set. These rows are
+PDS-traceable but are marked `sherloc_training_label_usable=False` because the
+available literature provides scan-level mineral detections rather than the
+point-level label workbook used for the default SHERLOC fine-tuning dataset.
 
 ## Figures
 
@@ -204,60 +316,54 @@ Code is released under the MIT License. Dataset tables and spectra are released 
 If you use this repository, please cite the associated manuscript and the source databases listed in `data/metadata/metadata_parent_945.csv`.
 ## Materialized Augmented Dataset
 
-The materialized augmented dataset is provided in
-`data/materialized_augmented_v1/`. It is not a compressed archive.
-The dataset contains one CSV file per spectrum in `spectra/`; each file contains
-the complete point-wise values used by the models:
-
-- `raman_shift_cm-1`
-- `intensity_normalized`
-- `first_derivative_normalized`
-- `valid_mask`
+The current materialized augmented dataset is provided in
+`data/augmented_spectra_v3/`. It is not a compressed archive.
+The dataset contains one CSV file per spectrum. Original spectra are
+preprocessed and written to `original_spectra/`; deterministic augmented
+training spectra are written to `spectra/`.
 
 The master table
-`data/materialized_augmented_v1/metadata_materialized_augmented.csv`
+`data/augmented_spectra_v3/metadata_augmented_training.csv`
 links every original and augmented spectrum to its mineral label, source,
-split, parent spectrum, file path, SHA-256 checksum, augmentation seed, and
-JSON-encoded augmentation parameters. Summary tables are in
-`data/materialized_augmented_v1/overview_tables/`, including
-`lineage_manifest.csv` and `split_by_class_and_augmentation.csv`.
+split, parent spectrum, file path, augmentation seed, and JSON-encoded
+augmentation parameters. Summary tables include
+`split_by_class_and_augmentation.csv` and
+`source_by_class_and_augmentation.csv`.
 
-The deterministic augmentation protocol is recorded in
-`data/materialized_augmented_v1/augmentation_protocol.json`.
 Raman band centers are not shifted during augmentation. Only the training split
-is augmented; validation and test spectra remain original materialized spectra.
+is augmented; validation and test spectra remain preprocessed, unaugmented
+measured spectra.
 
 To rebuild the materialized dataset:
 
 ```bash
-python src/build_materialized_augmented_dataset.py \
-  --metadata-file data/metadata_outputs/metadata_parent_945.csv \
-  --out-dir data/materialized_augmented_v1 \
-  --min-train-per-class 200 \
-  --baseline poly
+python src/augment_raman_dataset.py \
+  --metadata data/metadata/metadata_parent_945.csv \
+  --out-dir data/augmented_spectra_v3 \
+  --target-per-class 200 \
+  --seed 2024
 ```
 
 To rerun the final model comparison on the fixed materialized dataset:
 
 ```bash
-python src/train_model_comparison.py \
-  --metadata-file data/materialized_augmented_v1/metadata_materialized_augmented.csv \
-  --models pca_svm pls_da random_forest cnn standard_transformer mst \
-  --epochs 80 \
-  --batch-size 16 \
-  --lr 3e-5 \
+python src/run_model_selection.py \
+  --metadata-file data/augmented_spectra_v3/metadata_augmented_training.csv \
+  --out-dir results/materialized_augmented_v3_model_selection \
   --baseline none \
-  --no-augment \
-  --out-dir results/materialized_augmented_rerun
+  --min-per-class 200 \
+  --max-per-class 260 \
+  --epochs 120 \
+  --batch-size 24 \
+  --refresh-cache
 ```
 
-The reported final comparison is archived at
-`results/model_comparison_materialized_augmented.csv`, with the corresponding
-run manifest in `results/experiment_manifest_materialized_augmented.json`.
+The reviewer-requested comparison table from the current rerun is archived at
+`results/materialized_augmented_v3_model_selection/curated_20260519_104300/reviewer_requested_model_test_summary.csv`.
 
 ## Confidence Threshold Analysis
 
-Confidence threshold sweeps are archived in:
+Legacy confidence threshold sweeps are archived in:
 
 ```text
 results/confidence_threshold_analysis/
@@ -272,3 +378,49 @@ Key files:
 
 These files report accuracy, macro-F1, precision, recall, false-positive rate,
 and coverage after rejecting predictions below a probability threshold.
+
+The final confidence-threshold summary for the materialized v3 reference
+benchmark and pooled SHERLOC in-situ validation is archived in:
+
+```text
+results/confidence_threshold_materialized_v3/
+```
+
+Key files:
+
+- `reference_test_key_thresholds_requested_models.csv`
+- `sherloc_in_situ_key_thresholds_requested_models.csv`
+- `combined_key_thresholds_requested_models.csv`
+- `confidence_threshold_summary.md`
+
+To regenerate the final key-threshold tables after rerunning the reference and
+SHERLOC experiments:
+
+```bash
+python src/summarize_materialized_v3_confidence_thresholds.py
+```
+
+## SHERLOC In-Situ Model Comparison
+
+The pooled labeled SHERLOC in-situ comparison is archived in:
+
+```text
+results/sherloc_in_situ_model_comparison_v3/
+```
+
+It compares PCA-SVM, PLS-DA, 1D-CNN, Standard Transformer, and MST under the
+same repeated random-split validation protocol. The output includes aggregate
+metrics, per-seed confusion matrices, validation predictions, and
+confidence-threshold sweeps.
+
+To rerun:
+
+```bash
+python src/run_sherloc_in_situ_model_comparison_v3.py \
+  --metadata-file data/metadata/metadata_training_database_v2_all_sources.csv \
+  --out-dir results/sherloc_in_situ_model_comparison_v3 \
+  --variant despike_sg11_asls \
+  --seeds 2024 2025 2026 \
+  --epochs 60 \
+  --batch-size 32
+```

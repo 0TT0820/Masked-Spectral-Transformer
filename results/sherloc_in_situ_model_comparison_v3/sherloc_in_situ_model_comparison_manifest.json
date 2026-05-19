@@ -1,0 +1,37 @@
+{
+  "protocol": "Pooled labeled SHERLOC in-situ random-split validation; not independent target/region transfer.",
+  "metadata_file": "data\\metadata\\metadata_training_database_v2_all_sources.csv",
+  "variant": "despike_sg11_asls",
+  "seeds": [
+    2024,
+    2025,
+    2026
+  ],
+  "val_fraction": 0.2,
+  "internal_tune_fraction": 0.2,
+  "epochs": 60,
+  "batch_size": 32,
+  "classes": [
+    "Carbonate",
+    "Olivine",
+    "Other Silicates",
+    "Perchlorate",
+    "Phosphate",
+    "Pyroxene",
+    "Sulfate"
+  ],
+  "label_counts": {
+    "Sulfate": 410,
+    "Carbonate": 151,
+    "Olivine": 125,
+    "Other Silicates": 38,
+    "Perchlorate": 3,
+    "Pyroxene": 2,
+    "Phosphate": 1
+  },
+  "pooled_origin_counts": {
+    "previous_finetune_pool": 699,
+    "previous_external_validation": 31
+  },
+  "device": "cuda"
+}

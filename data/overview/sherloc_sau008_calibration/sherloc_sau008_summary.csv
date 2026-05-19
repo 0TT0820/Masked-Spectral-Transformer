@@ -1,0 +1,12 @@
+metric,value
+pds_rrs_products,12
+mean_region_spectra,36
+point_spectra_indexed,23655
+supervised_training_usable,0
+domain_adaptation_usable,36
+products_on_sol_27,3
+products_on_sol_59,3
+products_on_sol_181,4
+products_on_sol_712,2
+products_with_srlc15030,10
+products_with_srlc15031,2

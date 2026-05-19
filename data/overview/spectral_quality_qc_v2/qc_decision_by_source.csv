@@ -1,0 +1,10 @@
+﻿source_type_normalized,raman_qc_decision,n_spectra
+Lab-acquired DUV spectra,exclude_from_closed_set,11
+Lab-acquired DUV spectra,main_training_keep,104
+Lab-acquired DUV spectra,manual_review_keep_in_metadata,4
+Martian meteorite spectra,main_training_keep,7
+RRUFF database,exclude_from_closed_set,6
+RRUFF database,main_training_keep,526
+RRUFF database,manual_review_keep_in_metadata,259
+SHERLOC calibration target Mars meteorite SaU 008,main_training_keep,36
+SHERLOC in-situ Mars 2020,main_training_keep,730

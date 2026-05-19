@@ -1,0 +1,6 @@
+source_type_normalized,duv_domain_adaptation_bulk_unlabeled,duv_sherloc_labeled_external_validation,duv_sherloc_labeled_finetune_pool,duv_supervised_reference,meteorite_supervised_reference,visible_nir_supervised_reference
+Lab-acquired DUV spectra,0,0,0,119,0,0
+Martian meteorite spectra,0,0,0,0,7,0
+RRUFF database,0,0,0,0,0,791
+SHERLOC calibration target Mars meteorite SaU 008,36,0,0,0,0,0
+SHERLOC in-situ Mars 2020,0,31,699,0,0,0

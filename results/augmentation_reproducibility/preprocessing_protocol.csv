@@ -1,0 +1,6 @@
+﻿step,parameter,purpose
+common_grid,0-4000 cm-1 grid with 4100 points,Allows common tensor input while preserving a valid-mask channel for variable spectral coverage.
+baseline_correction,Second-order lower-envelope polynomial by default; ASLS option for SHERLOC preprocessing trials,Reduces smooth continuum background without treating Raman bands as baseline.
+normalization,Non-negative clipping followed by unit-maximum normalization within valid spectral coverage,Reduces absolute intensity differences across instruments and acquisition settings.
+derivative_channel,First derivative recomputed after preprocessing and after augmentation,Provides local band-shape information while retaining intensity channel.
+valid_mask,Invalid or padded regions remain zeroed and masked,Prevents padding or outside-coverage regions from influencing the model.

@@ -1,0 +1,46 @@
+field,value,count
+source_type_normalized,RRUFF database,791
+source_type_normalized,SHERLOC in-situ Mars 2020,730
+source_type_normalized,Lab-acquired DUV spectra,119
+source_type_normalized,SHERLOC calibration target Mars meteorite SaU 008,36
+source_type_normalized,Martian meteorite spectra,7
+source_domain,visible_nir_reference,791
+source_domain,sherloc_insitu_duv,730
+source_domain,laboratory_duv,119
+source_domain,sherloc_calibration_duv,36
+source_domain,meteorite_reference,7
+training_role,visible_nir_supervised_reference,791
+training_role,duv_sherloc_labeled_finetune_pool,699
+training_role,duv_supervised_reference,119
+training_role,duv_domain_adaptation_bulk_unlabeled,36
+training_role,duv_sherloc_labeled_external_validation,31
+training_role,meteorite_supervised_reference,7
+split_v2,sherloc_finetune_pool,699
+split_v2,train,643
+split_v2,test,137
+split_v2,val,137
+split_v2,domain_adaptation_only,36
+split_v2,sherloc_external_validation,31
+label_category_final,Sulfate,467
+label_category_final,Carbonate,275
+label_category_final,Olivine,178
+label_category_final,Pyroxene,155
+label_category_final,Other Silicates,116
+label_category_final,Clay,67
+label_category_final,Plagioclase,58
+label_category_final,Mica,52
+label_category_final,Phosphate,48
+label_category_final,Silica Phase,48
+label_category_final,K-Feldspar,47
+label_category_final,Oxides/Hydroxides,46
+label_category_final,Other Silicate,38
+label_category_final,,36
+label_category_final,Halides,17
+label_category_final,Borate,15
+label_category_final,Serpentine,14
+label_category_final,Glass,3
+label_category_final,Perchlorate,3
+supervised_label_usable_v2,True,1647
+supervised_label_usable_v2,False,36
+duv_library_include,True,885
+duv_library_include,False,798
