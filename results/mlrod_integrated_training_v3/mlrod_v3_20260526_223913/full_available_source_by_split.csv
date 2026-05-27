@@ -1,0 +1,5 @@
+﻿source_type_normalized,test,train,val
+Lab-acquired DUV spectra,20,72,16
+MLROD Raman open dataset,7490,59980,7491
+Martian meteorite spectra,1,5,1
+RRUFF database,112,556,117

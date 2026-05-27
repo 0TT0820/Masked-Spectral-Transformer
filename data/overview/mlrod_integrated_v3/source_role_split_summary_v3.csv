@@ -1,0 +1,16 @@
+﻿source_type_normalized,training_role,split_v3,n_spectra
+Lab-acquired DUV spectra,duv_supervised_reference,test,22
+Lab-acquired DUV spectra,duv_supervised_reference,train,78
+Lab-acquired DUV spectra,duv_supervised_reference,val,19
+MLROD Raman open dataset,mlrod_supervised_reference,mlrod_test,7490
+MLROD Raman open dataset,mlrod_supervised_reference,mlrod_train,59980
+MLROD Raman open dataset,mlrod_supervised_reference,mlrod_val,7491
+Martian meteorite spectra,meteorite_supervised_reference,test,1
+Martian meteorite spectra,meteorite_supervised_reference,train,5
+Martian meteorite spectra,meteorite_supervised_reference,val,1
+RRUFF database,visible_nir_supervised_reference,test,114
+RRUFF database,visible_nir_supervised_reference,train,560
+RRUFF database,visible_nir_supervised_reference,val,117
+SHERLOC calibration target Mars meteorite SaU 008,duv_domain_adaptation_bulk_unlabeled,domain_adaptation_only,36
+SHERLOC in-situ Mars 2020,duv_sherloc_labeled_external_validation,sherloc_external_validation,31
+SHERLOC in-situ Mars 2020,duv_sherloc_labeled_finetune_pool,sherloc_finetune_pool,699

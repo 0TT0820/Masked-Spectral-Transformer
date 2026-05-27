@@ -1,0 +1,33 @@
+{
+  "sherloc_rows_total": 730,
+  "sherloc_train_rows": 584,
+  "sherloc_validation_rows": 146,
+  "split_note": "stratified_for_labels_with_n>=2_singletons_forced_to_train",
+  "base_checkpoint": "publication_repo\\results\\mlrod_integrated_training_v3\\mlrod_v3_20260526_223913\\torch\\mst_trial5.pth",
+  "fine_tune_mode": "last_transformer_block_norm_and_head",
+  "sherloc_valid_range_cm-1": [
+    800.0,
+    4000.0
+  ],
+  "zero_shot_accuracy": 0.726027397260274,
+  "zero_shot_macro_f1": 0.29908270564546197,
+  "finetuned_accuracy": 0.815068493150685,
+  "finetuned_macro_f1": 0.6458657803102247,
+  "best_internal_finetune_macro_f1": 0.6458657803102247,
+  "classes_after_head_expansion": [
+    "Borate",
+    "Carbonate",
+    "Glass",
+    "K-Feldspar",
+    "Olivine",
+    "Other Silicates",
+    "Oxides/Hydroxides",
+    "Perchlorate",
+    "Phosphate",
+    "Phyllosilicates",
+    "Plagioclase",
+    "Pyroxene",
+    "Silica Phase",
+    "Sulfate"
+  ]
+}

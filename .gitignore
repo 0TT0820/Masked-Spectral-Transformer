@@ -10,6 +10,11 @@ data/augmented_spectra/
 data/augmented_spectra/spectra/
 assets/_docx_extract/
 data/external_sherloc_sau008_pds/products/
+data/external_mlrod_berlanga_2022/Spec-CNN-master/
+data/external_mlrod_berlanga_2022/raw_raman_files/*.csv
+data/external_mlrod_berlanga_2022/raw_raman_files/*.part
+data/metadata/metadata_training_database_v3_mlrod_integrated.csv
+results/mlrod_integrated_training_v3_smoke/
 *.pth
 *.pt
 *.ckpt

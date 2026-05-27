@@ -1,0 +1,14 @@
+﻿model_label,test,train,val
+Borate,0,14,1
+Carbonate,522,4108,526
+Glass,2,1,0
+K-Feldspar,563,4520,564
+Olivine,619,4945,629
+Other Silicates,521,4128,521
+Oxides/Hydroxides,8,31,7
+Phosphate,14,28,5
+Phyllosilicates,1399,11157,1402
+Plagioclase,1264,10104,1265
+Pyroxene,1194,9472,1190
+Silica Phase,1003,8067,1010
+Sulfate,514,4038,505

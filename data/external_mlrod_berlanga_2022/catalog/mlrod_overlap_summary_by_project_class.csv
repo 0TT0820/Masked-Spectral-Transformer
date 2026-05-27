@@ -1,0 +1,11 @@
+﻿mapped_project_superclass,samples,spectra,files,raw_files
+Carbonate,1,5032,8,2
+Olivine,1,6140,8,2
+Other Silicate,1,5054,12,4
+Phyllosilicate,2,13825,16,4
+Pyroxene,2,11703,14,3
+Silica Phase,1,10032,16,6
+Sulfate,1,5000,8,2
+Tectosilicate,3,17075,24,6
+mixture_or_rock,3,15260,31,5
+rock_test_set,4,39720,14,7

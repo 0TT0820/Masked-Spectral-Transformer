@@ -1,0 +1,20 @@
+﻿mlrod_sample_id,mlrod_mineral_name,mlrod_mineral_group,mlrod_type,mlrod_number_of_spectra,mapped_project_superclass,current_project_class_count,exact_species_overlap_in_current_qc_dataset,recommended_use,note
+Gabbro slab – 0% dust,,,Rock,8952,rock_test_set,0,,external_robustness_only,"Useful as external robustness test, not single-mineral superclass label"
+Granite slab - 0% dust,,,Rock,11028,rock_test_set,0,,external_robustness_only,"Useful as external robustness test, not single-mineral superclass label"
+Granite slab - 50% dust,,,Rock,10000,rock_test_set,0,,external_robustness_only,"Useful as external robustness test, not single-mineral superclass label"
+Gabbro slab – 50% dust,,,Rock,9740,rock_test_set,0,,external_robustness_only,"Useful as external robustness test, not single-mineral superclass label"
+Feldspar - Albite,Albite,Feldspar,Single phase mineral,5875,Tectosilicate,0,albite,candidate_training_or_external_validation,Maps to feldspar/plagioclase-type tectosilicate superclass
+Feldspar - Anorthite,Anorthite,Feldspar,Single phase mineral,5600,Tectosilicate,0,anorthite,candidate_training_or_external_validation,Maps to feldspar/plagioclase-type tectosilicate superclass
+Pyroxene - Augite,Augite,Pyroxene,Single phase mineral,6103,Pyroxene,110,augite,candidate_training_or_external_validation,Direct overlap with pyroxene superclass
+Mica - Biotite,Biotite,Mica,Single phase mineral,7925,Phyllosilicate,0,biotite,candidate_training_or_external_validation,Mica maps to the phyllosilicate/clay-related silicate group
+Carbonate - Calcite,Calcite,Carbonate,Single phase mineral,5032,Carbonate,223,calcite,candidate_training_or_external_validation,Direct overlap with carbonate superclass
+Pyroxene - Enstatite,Enstatite,Pyroxene,Single phase mineral,5600,Pyroxene,110,enstatite,candidate_training_or_external_validation,Direct overlap with pyroxene superclass
+Olivine - Forsterite,Forsterite,Olivine,Single phase mineral,6140,Olivine,159,forsterite,candidate_training_or_external_validation,Direct overlap with olivine superclass
+50% Forsterite / 50% Albite Mix,Forsterite + Albite,Olivine + Feldspar,Mixture,5220,mixture_or_rock,0,forsterite; albite,external_robustness_only,Not directly used as single-label mineral-superclass training data
+50% Forsterite / 50% Augite Mix,Forsterite + Augite,Olivine + Pyroxene,Mixture,5040,mixture_or_rock,0,forsterite; augite,external_robustness_only,Not directly used as single-label mineral-superclass training data
+Sulfate - Gypsum,Gypsum,Sulfate,Single phase mineral,5000,Sulfate,452,gypsum,candidate_training_or_external_validation,Direct overlap with sulfate superclass
+Amphibole - Hornblende,Hornblende,Amphibole,Single phase mineral,5054,Other Silicate,38,,candidate_training_or_external_validation,Amphibole is a chain silicate but was not a primary class in all current splits
+Feldspar - Microcline,Microcline,Feldspar,Single phase mineral,5600,Tectosilicate,0,microcline,candidate_training_or_external_validation,Maps to K-feldspar/tectosilicate superclass
+Mica - Muscovite,Muscovite,Mica,Single phase mineral,5900,Phyllosilicate,0,muscovite,candidate_training_or_external_validation,Mica maps to the phyllosilicate/clay-related silicate group
+Quartz,Quartz,Silicate,Single phase mineral,10032,Silica Phase,15,quartz,candidate_training_or_external_validation,Quartz maps to silica phase
+50% Quartz / 50% Albite Mix,Quartz + Albite,Silicate + Feldspar,Mixture,5000,mixture_or_rock,0,quartz; albite,external_robustness_only,Not directly used as single-label mineral-superclass training data

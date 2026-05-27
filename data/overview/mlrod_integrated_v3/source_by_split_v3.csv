@@ -1,0 +1,7 @@
+﻿source_type_normalized,domain_adaptation_only,mlrod_test,mlrod_train,mlrod_val,sherloc_external_validation,sherloc_finetune_pool,test,train,val
+Lab-acquired DUV spectra,0,0,0,0,0,0,22,78,19
+MLROD Raman open dataset,0,7490,59980,7491,0,0,0,0,0
+Martian meteorite spectra,0,0,0,0,0,0,1,5,1
+RRUFF database,0,0,0,0,0,0,114,560,117
+SHERLOC calibration target Mars meteorite SaU 008,36,0,0,0,0,0,0,0,0
+SHERLOC in-situ Mars 2020,0,0,0,0,31,699,0,0,0

@@ -166,13 +166,18 @@ The corresponding scripts are in `src/`:
 
 ```text
 augment_raman_dataset.py
+build_compact_v3_metadata.py
+build_mlrod_catalog_and_overlap.py
+build_mlrod_integrated_dataset_v3.py
 build_materialized_augmented_dataset.py
+download_mlrod_raw_raman.py
 build_sherloc_region_dataset.py
 build_sherloc_pds_provenance.py
 build_sherloc_montpezat_alfalfa_candidates.py
 build_sherloc_sau008_calibration_dataset.py
 build_training_database_v2.py
 run_model_selection.py
+run_mlrod_integrated_model_comparison_v3.py
 run_sherloc_finetune_protocol.py
 run_confidence_threshold_analysis.py
 run_mst_focused_tuning.py
@@ -188,6 +193,42 @@ summarize_model_benchmarks.py
 summarize_hyperparameter_selection.py
 summarize_all_requested_confidence_thresholds.py
 ```
+
+## MLROD-Integrated v3 Workflow
+
+The latest reviewer-oriented workflow integrates the original curated Raman
+database with the single-mineral spectra from MLROD (Berlanga et al., 2022;
+dataset DOI: 10.48484/PWRB-R137). The full generated v3 metadata table is not
+tracked in Git because it exceeds the ordinary GitHub single-file limit; instead,
+this repository tracks a compact audit table:
+
+```text
+data/metadata/metadata_training_database_v3_compact.csv
+```
+
+The full table can be regenerated locally after downloading the MLROD raw Raman
+files:
+
+```bash
+python src/download_mlrod_raw_raman.py
+python src/build_mlrod_integrated_dataset_v3.py
+python src/build_compact_v3_metadata.py
+```
+
+The current MLROD-integrated model comparison, SHERLOC fine-tuning run, and
+spectral-window sensitivity analysis are summarized in:
+
+```text
+results/mlrod_integrated_training_v3/mlrod_v3_20260526_223913/MLROD_integrated_experiment_summary.md
+results/sherloc_in_situ_model_comparison_v3_mlrod_context/SHERLOC_all_model_threshold_summary.md
+results/mlrod_spectral_window_sensitivity_v3/spectral_window_sensitivity_summary.md
+```
+
+These runs compare PCA-SVM, PLS-DA, 1D-CNN, Standard Transformer, and MST using
+validation-set hyperparameter selection. The spectral-window sensitivity
+analysis repeats the MLROD-integrated benchmark with `0-4000`, `100-1800`, and
+`800-1800 cm-1` grids to verify that the model ranking is not an artifact of
+zero-filled regions outside MLROD's original spectral coverage.
 
 ## Main Result Summary
 

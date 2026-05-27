@@ -1,0 +1,8 @@
+﻿training_role,,Borate,Carbonate,Clay,Glass,Halides,K-Feldspar,Mica,Olivine,Other Silicate,Other Silicates,Oxides/Hydroxides,Perchlorate,Phosphate,Phyllosilicates,Plagioclase,Pyroxene,Serpentine,Silica Phase,Sulfate
+duv_domain_adaptation_bulk_unlabeled,36,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+duv_sherloc_labeled_external_validation,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,30
+duv_sherloc_labeled_finetune_pool,0,0,151,0,0,0,0,0,125,38,0,0,3,0,0,0,2,0,0,380
+duv_supervised_reference,0,3,18,10,2,11,4,4,6,0,4,6,0,2,0,4,8,6,4,27
+meteorite_supervised_reference,0,0,0,0,1,0,0,0,0,0,0,5,0,0,0,0,1,0,0,0
+mlrod_supervised_reference,0,0,5032,0,0,0,5600,0,6140,0,5054,0,0,0,13825,12575,11703,0,10032,5000
+visible_nir_supervised_reference,0,12,106,57,0,6,43,48,47,0,112,35,0,45,0,54,144,8,44,30
