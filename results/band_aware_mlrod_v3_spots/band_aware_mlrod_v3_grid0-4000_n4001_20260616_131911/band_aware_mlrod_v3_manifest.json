@@ -1,0 +1,83 @@
+{
+  "architecture_family": "RamanAwareMST",
+  "purpose": "Explicit revised architecture experiment: band-aware pooling, multi-scale Raman-band frontend, and focal-loss sensitivity.",
+  "metadata_file": "data\\metadata\\metadata_training_database_v3_mlrod_integrated_spots.csv",
+  "grid": {
+    "min_cm-1": 0.0,
+    "max_cm-1": 4000.0,
+    "points": 4001
+  },
+  "selected_reference_plus_mlrod_rows": 12500,
+  "train_val_test_rows": [
+    8633,
+    1934,
+    1933
+  ],
+  "classes": [
+    "Borate",
+    "Carbonate",
+    "Glass",
+    "K-Feldspar",
+    "Olivine",
+    "Other Silicates",
+    "Oxides/Hydroxides",
+    "Phosphate",
+    "Phyllosilicates",
+    "Plagioclase",
+    "Pyroxene",
+    "Silica Phase",
+    "Sulfate"
+  ],
+  "trials": [
+    {
+      "trial": "band_multiscale_mst_patch8_d128_ce",
+      "frontend": "multiscale",
+      "pooling": "band_attention",
+      "loss": "ce",
+      "lr": 3e-05,
+      "d_model": 128,
+      "layers": 4,
+      "patch_size": 8,
+      "saliency_init": 0.75
+    }
+  ],
+  "selection_rule": "screen all candidates by reference validation macro-F1; report the manuscript main MST specified by --main-model",
+  "validation_best_model": {
+    "model": "band_multiscale_mst_patch8_d128_ce",
+    "params": "{\"trial\": \"band_multiscale_mst_patch8_d128_ce\", \"frontend\": \"multiscale\", \"pooling\": \"band_attention\", \"loss\": \"ce\", \"lr\": 3e-05, \"d_model\": 128, \"layers\": 4, \"patch_size\": 8, \"saliency_init\": 0.75}",
+    "validation_macro_f1": 0.8983024267699458,
+    "combined_test_accuracy": 0.9756854630108639,
+    "combined_test_macro_f1": 0.7846191851047609,
+    "curated_reference_test_accuracy": 0.7669172932330827,
+    "curated_reference_test_macro_f1": 0.6149839961272211,
+    "mlrod_test_accuracy": 0.9911111111111112,
+    "mlrod_test_macro_f1": 0.991118553064733,
+    "checkpoint": "results\\band_aware_mlrod_v3_spots\\band_aware_mlrod_v3_grid0-4000_n4001_20260616_131911\\torch\\band_multiscale_mst_patch8_d128_ce.pth"
+  },
+  "reported_main_model": {
+    "model": "band_multiscale_mst_patch8_d128_ce",
+    "params": "{\"trial\": \"band_multiscale_mst_patch8_d128_ce\", \"frontend\": \"multiscale\", \"pooling\": \"band_attention\", \"loss\": \"ce\", \"lr\": 3e-05, \"d_model\": 128, \"layers\": 4, \"patch_size\": 8, \"saliency_init\": 0.75}",
+    "validation_macro_f1": 0.8983024267699458,
+    "combined_test_accuracy": 0.9756854630108639,
+    "combined_test_macro_f1": 0.7846191851047609,
+    "curated_reference_test_accuracy": 0.7669172932330827,
+    "curated_reference_test_macro_f1": 0.6149839961272211,
+    "mlrod_test_accuracy": 0.9911111111111112,
+    "mlrod_test_macro_f1": 0.991118553064733,
+    "checkpoint": "results\\band_aware_mlrod_v3_spots\\band_aware_mlrod_v3_grid0-4000_n4001_20260616_131911\\torch\\band_multiscale_mst_patch8_d128_ce.pth"
+  },
+  "sherloc_finetune_summary": {
+    "sherloc_rows": 730,
+    "train_n": 584,
+    "validation_n": 146,
+    "split_note": "stratified_for_labels_with_n>=2_singletons_forced_to_train",
+    "finetune_mode": "last_block_pool_head",
+    "zero_shot_accuracy": 0.726027397260274,
+    "zero_shot_macro_f1": 0.24005944872379828,
+    "finetuned_accuracy": 0.8767123287671232,
+    "finetuned_macro_f1": 0.692615039281706,
+    "best_finetune_validation_macro_f1": 0.692615039281706
+  },
+  "seed": 2024,
+  "device": "cuda"
+}

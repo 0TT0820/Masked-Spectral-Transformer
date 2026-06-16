@@ -58,6 +58,9 @@ SEED = 2024
 EXCLUDED_LABELS = {"Halides"}
 PHYLL_LABELS = {"Clay", "Mica", "Serpentine"}
 MLROD_SPLIT_MAP = {"mlrod_train": "train", "mlrod_val": "val", "mlrod_test": "test"}
+MLROD_FORMAT = "mlrod_wide_csv_row"
+SYNTHETIC_METEORITE_FORMAT = "synthetic_meteorite_wide_csv_row"
+WIDE_ROW_FORMATS = {MLROD_FORMAT, SYNTHETIC_METEORITE_FORMAT}
 
 
 def log(message: str) -> None:
@@ -93,15 +96,24 @@ def harmonize_label(value: object) -> str:
 
 
 def resolve_path(path_value: object) -> Path:
-    path = Path(str(path_value))
-    if path.exists():
-        return path
-    candidate = ROOT / path
-    if candidate.exists():
-        return candidate
-    candidate = ROOT.parent / path
-    if candidate.exists():
-        return candidate
+    text = str(path_value).strip()
+    if not text or text.lower() in {"nan", "none", "<na>"}:
+        return Path("")
+    path = Path(text)
+    candidates = [path]
+    if not path.is_absolute():
+        candidates.append(ROOT / path)
+    parts = list(path.parts)
+    if "publication_repo" in parts:
+        suffix = Path(*parts[parts.index("publication_repo") + 1 :])
+        candidates.append(ROOT / suffix)
+    if "data" in parts:
+        suffix = Path(*parts[parts.index("data") :])
+        candidates.append(ROOT / suffix)
+    candidates.append(ROOT.parent / path)
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
     return path
 
 
@@ -109,6 +121,8 @@ def load_v3_metadata(metadata_file: Path) -> pd.DataFrame:
     df = pd.read_csv(metadata_file, low_memory=False)
     df["model_label"] = df["label_category_final"].map(harmonize_label)
     df["resolved_file_path"] = df["file_path"].map(resolve_path).map(str)
+    if "mlrod_container_file" in df.columns:
+        df["mlrod_container_file"] = df["mlrod_container_file"].map(lambda p: str(resolve_path(p)) if str(p).strip() else "")
     df["resolved_file_exists"] = df["resolved_file_path"].map(lambda p: Path(p).exists())
     if "supervised_label_usable_v2" in df.columns:
         df["supervised_label_usable_v2"] = df["supervised_label_usable_v2"].map(as_bool)
@@ -121,18 +135,21 @@ def load_v3_metadata(metadata_file: Path) -> pd.DataFrame:
 
 
 def build_reference_and_mlrod_pool(df: pd.DataFrame) -> pd.DataFrame:
-    base = df[
-        df["split_v3"].isin(["train", "val", "test"])
-        & df["supervised_label_usable_v2"]
-        & ~df["spectrum_storage_format"].eq("mlrod_wide_csv_row")
-    ].copy()
+    base = df[df["split_v3"].isin(["train", "val", "test"]) & df["supervised_label_usable_v2"] & ~df["spectrum_storage_format"].eq(MLROD_FORMAT)].copy()
     base["split_model"] = base["split_v3"]
 
-    mlrod = df[df["spectrum_storage_format"].eq("mlrod_wide_csv_row") & df["split_v3"].isin(MLROD_SPLIT_MAP)].copy()
+    mlrod = df[df["spectrum_storage_format"].eq(MLROD_FORMAT) & df["split_v3"].isin(MLROD_SPLIT_MAP)].copy()
     mlrod["split_model"] = mlrod["split_v3"].map(MLROD_SPLIT_MAP)
 
     pool = pd.concat([base, mlrod], ignore_index=True)
-    pool["source_family"] = np.where(pool["spectrum_storage_format"].eq("mlrod_wide_csv_row"), "MLROD", "curated_reference")
+    pool["source_family"] = np.select(
+        [
+            pool["spectrum_storage_format"].eq(MLROD_FORMAT),
+            pool["spectrum_storage_format"].eq(SYNTHETIC_METEORITE_FORMAT),
+        ],
+        ["MLROD", "synthetic_meteorite"],
+        default="curated_reference",
+    )
     pool["parent_group"] = pool["parent_group"].fillna(pool["spectrum_id"])
     pool["resolved_file_path"] = pool["resolved_file_path"].fillna(pool["file_path"])
     return pool.reset_index(drop=True)
@@ -201,6 +218,36 @@ def load_mlrod_group(path: Path, row_indices: list[int], baseline: str) -> dict[
     return rows
 
 
+def parse_shift_prefixed_columns(columns: pd.Index | list[str], prefix: str = "shift_") -> tuple[list[str], np.ndarray]:
+    shift_cols = []
+    shifts = []
+    for col in columns:
+        text = str(col)
+        if not text.startswith(prefix):
+            continue
+        try:
+            shifts.append(float(text.removeprefix(prefix)))
+            shift_cols.append(text)
+        except ValueError:
+            continue
+    order = np.argsort(np.asarray(shifts, dtype=np.float64))
+    ordered_cols = [shift_cols[int(i)] for i in order]
+    ordered_shifts = np.asarray([shifts[int(i)] for i in order], dtype=np.float64)
+    return ordered_cols, ordered_shifts
+
+
+def load_synthetic_meteorite_group(path: Path, row_indices: list[int], baseline: str) -> dict[int, tuple[np.ndarray, np.ndarray]]:
+    df = pd.read_csv(path)
+    shift_cols, shifts = parse_shift_prefixed_columns(df.columns)
+    if len(shift_cols) == 0:
+        raise ValueError(f"No shift_* columns found in {path}")
+    rows: dict[int, tuple[np.ndarray, np.ndarray]] = {}
+    for row_idx in row_indices:
+        values = pd.to_numeric(df.loc[int(row_idx), shift_cols], errors="coerce").to_numpy(dtype=np.float64)
+        rows[int(row_idx)] = preprocess_vector(shifts, values, baseline)
+    return rows
+
+
 def build_feature_arrays(samples: pd.DataFrame, cache_dir: Path, name: str, baseline: str, refresh: bool) -> tuple[np.ndarray, np.ndarray]:
     cache_dir.mkdir(parents=True, exist_ok=True)
     cache_path = cache_dir / f"{name}_{grid_tag()}_baseline-{baseline}_n{len(samples)}.npz"
@@ -211,7 +258,7 @@ def build_feature_arrays(samples: pd.DataFrame, cache_dir: Path, name: str, base
     features = np.zeros((len(samples), len(GRID), 3), dtype=np.float32)
     masks = np.ones((len(samples), len(GRID)), dtype=bool)
 
-    normal = samples[~samples["spectrum_storage_format"].eq("mlrod_wide_csv_row")]
+    normal = samples[~samples["spectrum_storage_format"].isin(WIDE_ROW_FORMATS)]
     total_normal = len(normal)
     for count, (idx, row) in enumerate(normal.iterrows(), start=1):
         if count == 1 or count % 100 == 0 or count == total_normal:
@@ -224,7 +271,21 @@ def build_feature_arrays(samples: pd.DataFrame, cache_dir: Path, name: str, base
         features[idx] = x
         masks[idx] = mask
 
-    mlrod = samples[samples["spectrum_storage_format"].eq("mlrod_wide_csv_row")]
+    synthetic = samples[samples["spectrum_storage_format"].eq(SYNTHETIC_METEORITE_FORMAT)]
+    if len(synthetic) > 0:
+        grouped = synthetic.groupby("resolved_file_path", sort=True)
+        for group_i, (file_path, group) in enumerate(grouped, start=1):
+            path = Path(str(file_path))
+            row_indices = [int(float(v)) for v in group["wide_row_index"].tolist()]
+            log(f"Preprocessing synthetic meteorite wide file {group_i}/{len(grouped)}: {path.name} ({len(row_indices)} selected rows)")
+            processed = load_synthetic_meteorite_group(path, row_indices, baseline)
+            for idx, row in group.iterrows():
+                row_idx = int(float(row["wide_row_index"]))
+                x, mask = processed[row_idx]
+                features[idx] = x
+                masks[idx] = mask
+
+    mlrod = samples[samples["spectrum_storage_format"].eq(MLROD_FORMAT)]
     if len(mlrod) > 0:
         grouped = mlrod.groupby("mlrod_container_file", sort=True)
         for group_i, (file_path, group) in enumerate(grouped, start=1):

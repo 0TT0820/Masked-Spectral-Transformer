@@ -1,0 +1,18 @@
+﻿source_type,qc_status,qc_reason,supervised_use_recommendation,n_spectra
+Lab-acquired DUV spectra,include_pending_manual_review,not reported in source record,included_in_reference_domain_benchmark,88
+Lab-acquired DUV spectra,review_required,phyllosilicate taxonomy overlaps Clay/Serpentine/Mica; harmonize class hierarchy,included_in_reference_domain_benchmark,20
+Lab-acquired DUV spectra,review_required,halide/salt class may be Raman-inactive or weak-feature; verify bands before supervised training,included_in_reference_domain_benchmark,11
+MLROD Raman open dataset,include_external_mlrod_single_mineral,single-mineral MLROD source with explicit ODR provenance and compatible closed-set superclass,included_in_reference_domain_benchmark,74961
+Martian meteorite spectra,include_pending_manual_review,not reported in source record,included_in_reference_domain_benchmark,4
+Martian meteorite spectra,include_public_martian_meteorite_supplement,Explicit mineral label is present in file name; public DOI and CC BY 4.0 license available,included_in_reference_domain_benchmark,3
+RRUFF database,include_pending_manual_review,visible/NIR Raman used for DUV transfer; document excitation-domain limitation,included_in_reference_domain_benchmark,588
+RRUFF database,include_pending_manual_review,visible/NIR Raman used for DUV transfer; document excitation-domain limitation; RRUFF processed spectrum; verify processing provenance and avoid mixing incompatible baselines,included_in_reference_domain_benchmark,84
+RRUFF database,review_required,phyllosilicate taxonomy overlaps Clay/Serpentine/Mica; harmonize class hierarchy; visible/NIR Raman used for DUV transfer; document excitation-domain limitation,included_in_reference_domain_benchmark,103
+RRUFF database,review_required,phyllosilicate taxonomy overlaps Clay/Serpentine/Mica; harmonize class hierarchy; visible/NIR Raman used for DUV transfer; document excitation-domain limitation; RRUFF processed spectrum; verify processing provenance and avoid mixing incompatible baselines,included_in_reference_domain_benchmark,10
+RRUFF database,review_required,halide/salt class may be Raman-inactive or weak-feature; verify bands before supervised training; visible/NIR Raman used for DUV transfer; document excitation-domain limitation,included_in_reference_domain_benchmark,6
+SHERLOC calibration target Mars meteorite SaU 008,traceable_bulk_target_no_supervised_label,bulk_target_only_no_point_level_mineral_label,domain_reference_only_not_closed_set_training,36
+SHERLOC in-situ Mars 2020,external_domain,Mars in-situ spectrum; reserve for external validation or explicitly named fine-tuning protocol,sherloc_domain_validation_only_not_augmented,31
+SHERLOC in-situ Mars 2020,include_pending_manual_review,supported_table1_closed_set,sherloc_domain_fine_tuning_pool_not_augmented,658
+SHERLOC in-situ Mars 2020,include_pending_manual_review,broad_sherloc_silicate_mapped_to_table1_other_silicate,sherloc_domain_fine_tuning_pool_not_augmented,38
+SHERLOC in-situ Mars 2020,include_pending_manual_review,species_level_sherloc_label_mapped_to_table1_perchlorate,sherloc_domain_fine_tuning_pool_not_augmented,3
+Synthetic meteorite mineral spot spectra,synthetic_teaching_only,source field in minerals_100spots_wide.csv is synthetic_teaching_only; measured provenance is not encoded,included_in_reference_domain_benchmark,800

@@ -1,0 +1,14 @@
+﻿mineral_superclass,original_train_count,augmented_count,final_train_count,augmentation_scope,validation_and_test_policy,note
+Borate,14,186,200,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.
+Carbonate,882,0,882,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.
+Glass,1,199,200,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.
+K-Feldspar,838,0,838,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.
+Olivine,833,0,833,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.
+Other Silicates,882,0,882,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.
+Oxides/Hydroxides,31,169,200,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.
+Phosphate,28,172,200,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.
+Phyllosilicates,896,0,896,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.
+Plagioclase,843,0,843,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.
+Pyroxene,909,0,909,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.
+Silica Phase,838,0,838,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.
+Sulfate,838,0,838,reference-domain training split only,measured spectra only; no augmented validation or test spectra,Materialized Raman-aware augmentation used only to balance minority classes in training.

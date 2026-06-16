@@ -14,3 +14,4 @@ RRUFF database,visible_nir_supervised_reference,val,117
 SHERLOC calibration target Mars meteorite SaU 008,duv_domain_adaptation_bulk_unlabeled,domain_adaptation_only,36
 SHERLOC in-situ Mars 2020,duv_sherloc_labeled_external_validation,sherloc_external_validation,31
 SHERLOC in-situ Mars 2020,duv_sherloc_labeled_finetune_pool,sherloc_finetune_pool,699
+Synthetic meteorite mineral spot spectra,synthetic_meteorite_training_supplement,train,800

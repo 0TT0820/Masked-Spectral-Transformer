@@ -1,0 +1,2 @@
+﻿sherloc_rows,train_n,validation_n,split_note,finetune_mode,zero_shot_accuracy,zero_shot_macro_f1,finetuned_accuracy,finetuned_macro_f1,best_finetune_validation_macro_f1
+730,584,146,stratified_for_labels_with_n>=2_singletons_forced_to_train,last_block_pool_head,0.726027397260274,0.24005944872379828,0.8767123287671232,0.692615039281706,0.692615039281706

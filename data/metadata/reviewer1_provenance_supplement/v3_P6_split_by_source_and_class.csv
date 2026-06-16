@@ -1,0 +1,127 @@
+﻿split_v3,source_type,mineral_superclass,n_spectra
+domain_adaptation_only,SHERLOC calibration target Mars meteorite SaU 008,not reported in source record,36
+mlrod_test,MLROD Raman open dataset,Carbonate,503
+mlrod_test,MLROD Raman open dataset,K-Feldspar,559
+mlrod_test,MLROD Raman open dataset,Olivine,614
+mlrod_test,MLROD Raman open dataset,Other Silicates,504
+mlrod_test,MLROD Raman open dataset,Phyllosilicates,1382
+mlrod_test,MLROD Raman open dataset,Plagioclase,1257
+mlrod_test,MLROD Raman open dataset,Pyroxene,1170
+mlrod_test,MLROD Raman open dataset,Silica Phase,1001
+mlrod_test,MLROD Raman open dataset,Sulfate,500
+mlrod_train,MLROD Raman open dataset,Carbonate,4026
+mlrod_train,MLROD Raman open dataset,K-Feldspar,4482
+mlrod_train,MLROD Raman open dataset,Olivine,4912
+mlrod_train,MLROD Raman open dataset,Other Silicates,4046
+mlrod_train,MLROD Raman open dataset,Phyllosilicates,11061
+mlrod_train,MLROD Raman open dataset,Plagioclase,10061
+mlrod_train,MLROD Raman open dataset,Pyroxene,9363
+mlrod_train,MLROD Raman open dataset,Silica Phase,8029
+mlrod_train,MLROD Raman open dataset,Sulfate,4000
+mlrod_val,MLROD Raman open dataset,Carbonate,503
+mlrod_val,MLROD Raman open dataset,K-Feldspar,559
+mlrod_val,MLROD Raman open dataset,Olivine,614
+mlrod_val,MLROD Raman open dataset,Other Silicates,504
+mlrod_val,MLROD Raman open dataset,Phyllosilicates,1382
+mlrod_val,MLROD Raman open dataset,Plagioclase,1257
+mlrod_val,MLROD Raman open dataset,Pyroxene,1170
+mlrod_val,MLROD Raman open dataset,Silica Phase,1002
+mlrod_val,MLROD Raman open dataset,Sulfate,500
+sherloc_external_validation,SHERLOC in-situ Mars 2020,Phosphate,1
+sherloc_external_validation,SHERLOC in-situ Mars 2020,Sulfate,30
+sherloc_finetune_pool,SHERLOC in-situ Mars 2020,Carbonate,151
+sherloc_finetune_pool,SHERLOC in-situ Mars 2020,Olivine,125
+sherloc_finetune_pool,SHERLOC in-situ Mars 2020,Other Silicate,38
+sherloc_finetune_pool,SHERLOC in-situ Mars 2020,Perchlorate,3
+sherloc_finetune_pool,SHERLOC in-situ Mars 2020,Pyroxene,2
+sherloc_finetune_pool,SHERLOC in-situ Mars 2020,Sulfate,380
+test,Lab-acquired DUV spectra,Carbonate,6
+test,Lab-acquired DUV spectra,Clay,2
+test,Lab-acquired DUV spectra,Glass,2
+test,Lab-acquired DUV spectra,Halides,2
+test,Lab-acquired DUV spectra,K-Feldspar,1
+test,Lab-acquired DUV spectra,Mica,1
+test,Lab-acquired DUV spectra,Olivine,1
+test,Lab-acquired DUV spectra,Other Silicates,1
+test,Lab-acquired DUV spectra,Pyroxene,1
+test,Lab-acquired DUV spectra,Serpentine,1
+test,Lab-acquired DUV spectra,Sulfate,4
+test,Martian meteorite spectra,Oxides/Hydroxides,1
+test,RRUFF database,Carbonate,13
+test,RRUFF database,Clay,9
+test,RRUFF database,Halides,2
+test,RRUFF database,K-Feldspar,3
+test,RRUFF database,Mica,4
+test,RRUFF database,Olivine,4
+test,RRUFF database,Other Silicates,16
+test,RRUFF database,Oxides/Hydroxides,7
+test,RRUFF database,Phosphate,14
+test,RRUFF database,Plagioclase,7
+test,RRUFF database,Pyroxene,23
+test,RRUFF database,Silica Phase,2
+test,RRUFF database,Sulfate,10
+train,Lab-acquired DUV spectra,Borate,3
+train,Lab-acquired DUV spectra,Carbonate,10
+train,Lab-acquired DUV spectra,Clay,7
+train,Lab-acquired DUV spectra,Halides,6
+train,Lab-acquired DUV spectra,K-Feldspar,2
+train,Lab-acquired DUV spectra,Mica,3
+train,Lab-acquired DUV spectra,Olivine,4
+train,Lab-acquired DUV spectra,Other Silicates,3
+train,Lab-acquired DUV spectra,Oxides/Hydroxides,4
+train,Lab-acquired DUV spectra,Phosphate,2
+train,Lab-acquired DUV spectra,Plagioclase,2
+train,Lab-acquired DUV spectra,Pyroxene,7
+train,Lab-acquired DUV spectra,Serpentine,4
+train,Lab-acquired DUV spectra,Silica Phase,2
+train,Lab-acquired DUV spectra,Sulfate,19
+train,Martian meteorite spectra,Glass,1
+train,Martian meteorite spectra,Oxides/Hydroxides,3
+train,Martian meteorite spectra,Pyroxene,1
+train,RRUFF database,Borate,11
+train,RRUFF database,Carbonate,72
+train,RRUFF database,Clay,38
+train,RRUFF database,Halides,4
+train,RRUFF database,K-Feldspar,36
+train,RRUFF database,Mica,38
+train,RRUFF database,Olivine,29
+train,RRUFF database,Other Silicates,79
+train,RRUFF database,Oxides/Hydroxides,24
+train,RRUFF database,Phosphate,26
+train,RRUFF database,Plagioclase,41
+train,RRUFF database,Pyroxene,101
+train,RRUFF database,Serpentine,6
+train,RRUFF database,Silica Phase,36
+train,RRUFF database,Sulfate,19
+train,Synthetic meteorite mineral spot spectra,Olivine,100
+train,Synthetic meteorite mineral spot spectra,Oxides/Hydroxides,100
+train,Synthetic meteorite mineral spot spectra,Phyllosilicates,100
+train,Synthetic meteorite mineral spot spectra,Plagioclase,100
+train,Synthetic meteorite mineral spot spectra,Pyroxene,200
+train,Synthetic meteorite mineral spot spectra,Silica Phase,100
+train,Synthetic meteorite mineral spot spectra,Sulfate,100
+val,Lab-acquired DUV spectra,Carbonate,2
+val,Lab-acquired DUV spectra,Clay,1
+val,Lab-acquired DUV spectra,Halides,3
+val,Lab-acquired DUV spectra,K-Feldspar,1
+val,Lab-acquired DUV spectra,Olivine,1
+val,Lab-acquired DUV spectra,Oxides/Hydroxides,2
+val,Lab-acquired DUV spectra,Plagioclase,2
+val,Lab-acquired DUV spectra,Serpentine,1
+val,Lab-acquired DUV spectra,Silica Phase,2
+val,Lab-acquired DUV spectra,Sulfate,4
+val,Martian meteorite spectra,Oxides/Hydroxides,1
+val,RRUFF database,Borate,1
+val,RRUFF database,Carbonate,21
+val,RRUFF database,Clay,10
+val,RRUFF database,K-Feldspar,4
+val,RRUFF database,Mica,6
+val,RRUFF database,Olivine,14
+val,RRUFF database,Other Silicates,17
+val,RRUFF database,Oxides/Hydroxides,4
+val,RRUFF database,Phosphate,5
+val,RRUFF database,Plagioclase,6
+val,RRUFF database,Pyroxene,20
+val,RRUFF database,Serpentine,2
+val,RRUFF database,Silica Phase,6
+val,RRUFF database,Sulfate,1

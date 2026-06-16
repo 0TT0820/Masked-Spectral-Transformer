@@ -1,0 +1,12 @@
+﻿field,description
+spectrum_id,Unique spectrum identifier used in the revised metadata.
+source_type,Five retained source families plus MLROD public Raman spectra used in the final expanded benchmark.
+source_domain,Experimental domain inferred from the source type.
+training_role,"Role assigned before splitting, e.g., reference benchmark, SHERLOC fine-tuning, or domain reference."
+split_v3,Final split used in the v3 experiments.
+zero_shot_protocol_role,"Whether the spectrum belongs to the Earth/reference pool, SHERLOC candidate pool, external SHERLOC test, or MLROD external source."
+source_url_or_product,"RRUFF URL, DOI/PDS/source identifier, or controlled missing phrase."
+qc_status,Final quality-control flag used in dataset construction.
+recommended_action,"Final recommendation for inclusion, exclusion, or adaptation-only use."
+provenance_confidence,Controlled provenance-confidence label.
+supervised_use_recommendation,"How the row is used in supervised training, SHERLOC fine-tuning, validation, or metadata-only records."

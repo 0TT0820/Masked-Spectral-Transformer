@@ -1,0 +1,2 @@
+﻿model,params,checkpoint,best_val_macro_f1,accuracy,macro_f1,weighted_f1
+band_multiscale_mst_patch8_d128_ce,"{""trial"": ""band_multiscale_mst_patch8_d128_ce"", ""frontend"": ""multiscale"", ""pooling"": ""band_attention"", ""loss"": ""ce"", ""lr"": 3e-05, ""d_model"": 128, ""layers"": 4, ""patch_size"": 8, ""saliency_init"": 0.75}",results\band_aware_mlrod_v3_spots\band_aware_mlrod_v3_grid0-4000_n4001_20260616_131911\torch\band_multiscale_mst_patch8_d128_ce.pth,0.8983024267699458,0.9756854630108639,0.7846191851047609,0.975216078033896

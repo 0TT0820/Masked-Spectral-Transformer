@@ -1,0 +1,17 @@
+﻿source_type,source_domain,training_role,split_v3,n_spectra
+Lab-acquired DUV spectra,laboratory DUV reference domain,duv_supervised_reference,test,22
+Lab-acquired DUV spectra,laboratory DUV reference domain,duv_supervised_reference,train,78
+Lab-acquired DUV spectra,laboratory DUV reference domain,duv_supervised_reference,val,19
+MLROD Raman open dataset,public Raman reference domain,mlrod_supervised_reference,mlrod_test,7490
+MLROD Raman open dataset,public Raman reference domain,mlrod_supervised_reference,mlrod_train,59980
+MLROD Raman open dataset,public Raman reference domain,mlrod_supervised_reference,mlrod_val,7491
+Martian meteorite spectra,extraterrestrial meteorite Raman reference domain,meteorite_supervised_reference,test,1
+Martian meteorite spectra,extraterrestrial meteorite Raman reference domain,meteorite_supervised_reference,train,5
+Martian meteorite spectra,extraterrestrial meteorite Raman reference domain,meteorite_supervised_reference,val,1
+RRUFF database,public visible/NIR Raman reference domain,visible_nir_supervised_reference,test,114
+RRUFF database,public visible/NIR Raman reference domain,visible_nir_supervised_reference,train,560
+RRUFF database,public visible/NIR Raman reference domain,visible_nir_supervised_reference,val,117
+SHERLOC calibration target Mars meteorite SaU 008,Mars 2020 SHERLOC calibration DUV domain,duv_domain_adaptation_bulk_unlabeled,domain_adaptation_only,36
+SHERLOC in-situ Mars 2020,Mars 2020 SHERLOC in-situ DUV domain,duv_sherloc_labeled_external_validation,sherloc_external_validation,31
+SHERLOC in-situ Mars 2020,Mars 2020 SHERLOC in-situ DUV domain,duv_sherloc_labeled_finetune_pool,sherloc_finetune_pool,699
+Synthetic meteorite mineral spot spectra,extraterrestrial meteorite Raman reference domain,synthetic_meteorite_training_supplement,train,800

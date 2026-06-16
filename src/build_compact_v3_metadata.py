@@ -8,6 +8,7 @@ table with the columns needed to audit source, label, split, and raw-data access
 
 from __future__ import annotations
 
+import argparse
 from pathlib import Path
 
 import pandas as pd
@@ -20,6 +21,7 @@ OUT_METADATA = ROOT / "data" / "metadata" / "metadata_training_database_v3_compa
 KEEP_COLUMNS = [
     "spectrum_id",
     "file_name",
+    "relative_file_path",
     "spectrum_storage_format",
     "label_category_final",
     "mineral_species_final",
@@ -36,6 +38,11 @@ KEEP_COLUMNS = [
     "qc_status",
     "qc_reason",
     "recommended_action",
+    "source_note",
+    "synthetic_or_measured",
+    "wide_source_file",
+    "wide_row_index",
+    "wide_source_field",
     "supervised_label_usable_v2",
     "duv_library_include",
     "mlrod_odr_datarecord_id",
@@ -56,7 +63,18 @@ KEEP_COLUMNS = [
 
 
 def main() -> None:
-    df = pd.read_csv(FULL_METADATA, low_memory=False)
+    parser = argparse.ArgumentParser(description="Create a compact, GitHub-friendly v3 metadata table.")
+    parser.add_argument("--full-metadata", type=Path, default=FULL_METADATA)
+    parser.add_argument("--out-metadata", type=Path, default=OUT_METADATA)
+    args = parser.parse_args()
+    full_metadata = args.full_metadata
+    out_metadata = args.out_metadata
+    if not full_metadata.is_absolute():
+        full_metadata = ROOT / full_metadata
+    if not out_metadata.is_absolute():
+        out_metadata = ROOT / out_metadata
+
+    df = pd.read_csv(full_metadata, low_memory=False)
     root_str = str(ROOT).replace("\\", "/")
     if "file_path" in df.columns:
         df["relative_file_path"] = (
@@ -68,11 +86,16 @@ def main() -> None:
         )
     columns = [column for column in KEEP_COLUMNS if column in df.columns]
     compact = df[columns].copy()
-    compact.to_csv(OUT_METADATA, index=False, encoding="utf-8-sig")
-    print(f"Wrote compact metadata: {OUT_METADATA}")
+    if "wide_row_index" in compact.columns:
+        compact["wide_row_index"] = compact["wide_row_index"].apply(
+            lambda value: "" if pd.isna(value) or str(value).strip() == "" else str(int(float(value)))
+        )
+    out_metadata.parent.mkdir(parents=True, exist_ok=True)
+    compact.to_csv(out_metadata, index=False, encoding="utf-8-sig")
+    print(f"Wrote compact metadata: {out_metadata}")
     print(f"Rows: {len(compact):,}")
     print(f"Columns: {len(compact.columns):,}")
-    print(f"Size MB: {OUT_METADATA.stat().st_size / 1024 / 1024:.1f}")
+    print(f"Size MB: {out_metadata.stat().st_size / 1024 / 1024:.1f}")
 
 
 if __name__ == "__main__":

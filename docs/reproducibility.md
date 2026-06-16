@@ -1,205 +1,212 @@
 # Reproducibility
 
-## Main Comparison
+This document describes the current final v3 manuscript workflow. Older v2
+model-selection and materialized-augmentation scripts are retained in the
+repository for auditability, but the manuscript-level results should be
+reproduced from the v3 MLROD-integrated, quality-controlled, masked 0-4000
+cm-1 workflow described below.
 
-The main comparison table was produced with:
+## Environment
 
-```bash
-python src/train_model_comparison.py --models pca_svm pls_da random_forest cnn standard_transformer mst --epochs 180 --batch-size 16 --lr 1e-4 --baseline poly --chemometric-stride 8 --no-augment
-```
-
-For a faster baseline-only check:
-
-```bash
-python src/train_model_comparison.py --models pca_svm pls_da random_forest --baseline poly --chemometric-stride 8 --no-augment
-```
-
-For a smoke test:
+Install the Python dependencies:
 
 ```bash
-python src/train_model_comparison.py --models pca_svm pls_da --baseline poly --chemometric-stride 8
+pip install -r requirements.txt
 ```
 
-## Model Benchmark Suite
+GPU acceleration is recommended for the Transformer models. Chemometric
+baselines can run on CPU, but full v3 model selection and SHERLOC fine-tuning
+are substantially faster on CUDA hardware.
 
-The benchmark suite includes PCA-SVM, PLS-DA, 1D-CNN, Standard Transformer,
-and MST. Hyperparameters are selected on the validation split before test
-reporting.
+## Dataset Reconstruction
 
-The archived summaries are:
+The compact metadata table distributed with the repository is:
 
 ```text
-results/model_benchmarks/hyperparameter_selection_table.csv
-results/model_benchmarks/validation_selected_summary.csv
-results/model_benchmarks/best_observed_grid_summary.csv
-results/model_benchmarks/hyperparameter_selection_summary.md
+data/metadata/metadata_training_database_v3_compact.csv
 ```
 
-To rerun the current materialized-augmentation benchmark:
-
-```bash
-python src/augment_raman_dataset.py \
-  --metadata data/metadata/metadata_parent_945.csv \
-  --out-dir data/augmented_spectra_v3 \
-  --target-per-class 200 \
-  --seed 2024
-
-python src/run_model_selection.py \
-  --metadata-file data/augmented_spectra_v3/metadata_augmented_training.csv \
-  --out-dir results/materialized_augmented_v3_model_selection \
-  --baseline none \
-  --min-per-class 200 \
-  --max-per-class 260 \
-  --epochs 120 \
-  --batch-size 24 \
-  --refresh-cache
-
-python src/summarize_model_benchmarks.py
-python src/summarize_hyperparameter_selection.py
-```
-
-## Materialized Augmented Dataset
-
-The final augmentation dataset is deterministic and materialized as one CSV
-per spectrum. Validation and test spectra remain original spectra; augmentation
-is applied only to the training split.
-
-```bash
-python src/augment_raman_dataset.py \
-  --metadata data/metadata/metadata_parent_945.csv \
-  --out-dir data/augmented_spectra_v3 \
-  --target-per-class 200 \
-  --seed 2024
-```
-
-The resulting master metadata table is:
+The large integrated MLROD metadata table is regenerated from public source
+downloads and is intentionally ignored by Git. The current compact metadata
+also includes a training-only meteorite-mineral spot supplement whose source
+file is marked `synthetic_teaching_only`:
 
 ```text
-data/augmented_spectra_v3/metadata_augmented_training.csv
+data/metadata/metadata_training_database_v3_mlrod_integrated.csv
+data/metadata/metadata_training_database_v3_mlrod_integrated_spots.csv
+data/minerals_100spots_wide.csv
 ```
 
-Each spectrum file contains point-wise Raman-shift and normalized-intensity
-values. Original validation and test spectra are preprocessed and materialized
-without stochastic augmentation, while training spectra include both the
-preprocessed parent spectra and deterministic augmented derivatives.
-
-The current materialized dataset contains 897 original spectra and 1,970
-augmented training spectra, for 2,867 rows in the combined metadata table.
-
-## SHERLOC In-Situ Model Comparison
-
-The pooled labeled SHERLOC in-situ validation compares the same
-reviewer-requested model families as the reference benchmark: PCA-SVM, PLS-DA,
-1D-CNN, Standard Transformer, and MST. It uses repeated random splits over the
-pooled labeled SHERLOC spectra and should be interpreted as within-domain
-SHERLOC adaptation validation, not as independent target-transfer validation.
+Rebuild the spot-supplement metadata and compact table with:
 
 ```bash
-python src/run_sherloc_in_situ_model_comparison_v3.py \
-  --metadata-file data/metadata/metadata_training_database_v2_all_sources.csv \
-  --out-dir results/sherloc_in_situ_model_comparison_v3 \
-  --variant despike_sg11_asls \
-  --seeds 2024 2025 2026 \
-  --epochs 60 \
+python src/download_mlrod_raw_raman.py
+python src/build_mlrod_integrated_dataset_v3.py \
+  --out-metadata data/metadata/metadata_training_database_v3_mlrod_integrated_spots.csv
+python src/build_compact_v3_metadata.py \
+  --full-metadata data/metadata/metadata_training_database_v3_mlrod_integrated_spots.csv
+```
+
+The v3 metadata harmonizes RRUFF, laboratory DUV spectra, Martian meteorite
+spectra, SHERLOC SaU 008 calibration-target spectra, MLROD Raman spectra, and
+pooled labeled SHERLOC in-situ spectra. The 800 spot-supplement rows are
+training-only and should not be reported as measured meteorite validation
+spectra. Quality-control annotations and final training roles are documented in
+the provenance workbook generated by:
+
+```bash
+python src/build_reviewer1_provenance_supplement.py
+```
+
+## Final MST And SHERLOC Experiment
+
+The selected manuscript model is:
+
+```text
+band_multiscale_mst_patch8_d128_ce
+```
+
+Run the final 0-4000 cm-1 masked variable-range experiment with:
+
+```bash
+python src/run_band_aware_mlrod_v3_experiments.py \
+  --metadata-file data/metadata/metadata_training_database_v3_mlrod_integrated.csv \
+  --out-dir results/band_aware_mlrod_v3 \
+  --grid-min 0 --grid-max 4000 --grid-points 4001 \
+  --main-model band_multiscale_mst_patch8_d128_ce \
+  --run-sherloc
+```
+
+The authoritative manuscript-level summary is:
+
+```text
+results/band_aware_mlrod_v3/band_aware_model_selection_summary.md
+```
+
+Primary reported metrics for the selected MST are:
+
+| Setting | Accuracy | Macro-F1 |
+|---|---:|---:|
+| Reference+MLROD measured test spectra | 0.976 | 0.837 |
+| SHERLOC zero-shot validation | 0.493 | 0.161 |
+| SHERLOC fine-tuned validation | 0.863 | 0.820 |
+
+Validation and test spectra are measured spectra only. Raman-aware
+augmentation is applied only to the training split. Missing or unmeasured
+spectral regions are masked rather than interpreted as measured zero-intensity
+Raman signal.
+
+## Meteorite Spot Supplement Sensitivity Run
+
+To reproduce the main-MST run after adding the 800 training-only spot rows:
+
+```bash
+python src/run_band_aware_mlrod_v3_experiments.py \
+  --metadata-file data/metadata/metadata_training_database_v3_mlrod_integrated_spots.csv \
+  --out-dir results/band_aware_mlrod_v3_spots \
+  --grid-min 0 --grid-max 4000 --grid-points 4001 \
+  --trial-set main \
+  --main-model band_multiscale_mst_patch8_d128_ce \
+  --run-sherloc \
+  --epochs 45 \
+  --finetune-epochs 60 \
   --batch-size 32
 ```
 
-The key outputs are:
-
-```text
-results/sherloc_in_situ_model_comparison_v3/sherloc_in_situ_model_comparison_aggregate.csv
-results/sherloc_in_situ_model_comparison_v3/sherloc_in_situ_key_thresholds.csv
-results/sherloc_in_situ_model_comparison_v3/sherloc_in_situ_validation_predictions.csv
-```
-
-## SHERLOC Fine-Tuning Protocol
-
-SHERLOC region spectra extracted from Dourbes, Garde/Bellegarde, Guillaumes,
-and Quartier are summarized in:
-
-```text
-data/metadata/metadata_parent_945_plus_sherloc_regions_table1_training_ready.csv
-data/overview/sherloc_regions/
-```
-
-The fine-tuning and target-transfer summaries are archived in:
-
-```text
-results/sherloc_finetune/
-```
-
-To rerun the protocol:
-
-```bash
-python src/build_sherloc_region_dataset.py
-python src/run_sherloc_finetune_protocol.py
-```
+This run selected 8,633 train, 1,934 validation, and 1,933 test spectra. It
+achieved 0.976 accuracy / 0.785 macro-F1 on the measured Reference+MLROD test
+set, 0.726 / 0.240 for SHERLOC zero-shot validation, and 0.877 / 0.693 after
+SHERLOC fine-tuning. Because the supplement is explicitly marked
+`synthetic_teaching_only`, this is a transparent sensitivity run and not a
+measured-data replacement.
 
 ## Confidence Thresholds
 
-Confidence-threshold scans report precision, recall, false-positive rate,
-accuracy, macro-F1, and coverage as a function of accepted prediction
-confidence. The archived tables are in:
+Confidence-threshold behavior for the selected MST is summarized in:
 
 ```text
+results/band_aware_mlrod_v3/band_aware_model_selection_summary.md
+```
+
+The default hard-classification setting is threshold 0.00. Higher thresholds
+represent rejection-aware operating points: they report accuracy, macro-F1,
+false-discovery rate, and coverage after low-confidence predictions are
+rejected.
+
+Historical threshold tables from earlier reviewer-response experiments are
+kept under `results/confidence_threshold_analysis/` and
+`results/confidence_threshold_materialized_v3/`, but the final manuscript
+threshold discussion should use the v3 summary above.
+
+## Interpretability And Embedding Figures
+
+Regenerate the peak-aware SHAP explanations and final SHERLOC-style panel:
+
+```bash
+python src/run_peak_confusion_explanations.py --out-dir results/shap_confusion_explanations_v4_final
+python src/plot_sherloc_confusion_publication_style.py
+```
+
+Regenerate the MST embedding t-SNE panels:
+
+```bash
+python src/plot_mst_tsne_embeddings.py
+python src/plot_mst_tsne_combined.py
+```
+
+The key figure outputs are:
+
+```text
+results/shap_confusion_explanations_v4_final/figure_sherloc_confusion_peak_shap_publication_style.svg
+results/tsne_embedding_figures_v1/figure_mst_tsne_three_panel_combined.svg
+```
+
+The SHAP panel is a qualitative band-level explanation of selected confusion
+cases. The t-SNE panel visualizes learned MST embeddings and should not be used
+as a quantitative performance metric.
+
+## Figure 5-7 Source Data
+
+The revised performance and class-wise figure data are stored in:
+
+```text
+figures/origin_model_performance_data/
+figures/origin_classwise_performance_data/
+figures/model_performance_examples/
+figures/classwise_performance_examples/
+figures/fig7_panels/
+```
+
+These tables and examples support the revised model-comparison, per-class, and
+confidence-threshold panels.
+
+## Legacy Scripts
+
+The following scripts and folders document earlier revision stages and
+reviewer-response experiments:
+
+```text
+src/train_model_comparison.py
+src/run_model_selection.py
+src/run_sherloc_in_situ_model_comparison_v3.py
+results/review_updated_training_v2*/
+results/sherloc_in_situ_model_comparison_v3*/
 results/confidence_threshold_analysis/
+results/confidence_threshold_materialized_v3/
 ```
 
-To rerun the threshold analysis:
-
-```bash
-python src/run_confidence_threshold_analysis.py
-python src/summarize_all_requested_confidence_thresholds.py
-```
-
-The key table for manuscript reporting is:
-
-```text
-results/confidence_threshold_analysis/parent_test_key_thresholds_all_requested_models.csv
-```
-
-For the final materialized-augmentation benchmark and the pooled SHERLOC
-in-situ validation, run:
-
-```bash
-python src/summarize_materialized_v3_confidence_thresholds.py
-```
-
-The combined key-threshold tables are:
-
-```text
-results/confidence_threshold_materialized_v3/reference_test_key_thresholds_requested_models.csv
-results/confidence_threshold_materialized_v3/sherloc_in_situ_key_thresholds_requested_models.csv
-results/confidence_threshold_materialized_v3/combined_key_thresholds_requested_models.csv
-results/confidence_threshold_materialized_v3/confidence_threshold_summary.md
-```
-
-## Current Best Summary
-
-The current model-comparison summary is:
-
-```text
-results/model_comparison/best_by_model_summary.csv
-```
-
-The best current MST setting uses:
-
-- label scheme: `curated`
-- baseline correction: `poly`
-- train-time augmentation: disabled
-- learning rate: `1e-4`
-- epochs: `180`
-- batch size: `16`
+They are useful for audit trails but are not the final numerical source for
+the current manuscript. Use `docs/final_results_and_figures_index.md` for the
+file-level map of the final v3 release.
 
 ## Randomness
 
-Scripts use a fixed seed of `2024` unless otherwise specified. Deep-learning results may still vary slightly across hardware, CUDA versions, and PyTorch versions.
+Scripts use fixed seeds where possible. Deep-learning results can still vary
+slightly across PyTorch, CUDA, driver, and hardware versions.
 
-## Computational Requirements
+## Large Files
 
-Chemometric baselines run in seconds on a CPU. CNN, Standard Transformer, and MST are faster on a CUDA GPU. The patch-token Transformer implementation reduces the original 4100-point sequence into shorter spectral tokens to keep training practical while retaining physical wavenumber information.
-
-Large trained weights are intentionally not committed. The repository contains
-training histories, classification reports, confusion matrices, threshold
-tables, and run manifests sufficient to evaluate and rerun the reported
-experiments.
+Raw external downloads, regenerated large metadata, checkpoints, tensorboard
+logs, and cache arrays are excluded through `.gitignore`. The repository keeps
+compact metadata, provenance summaries, source scripts, final figure data, and
+final result summaries needed to audit and reproduce the manuscript workflow.
